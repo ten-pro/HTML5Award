@@ -14,7 +14,4 @@ const wide = () => {
 </script>
 
 <style scoped>
-html{
-    background-image: './PNG/background.png';
-}
 </style>
