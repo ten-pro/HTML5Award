@@ -1,6 +1,7 @@
 
 <template>
     <div>
+        <div class="states"></div>
     </div>
 </template>
 <script setup>
@@ -14,4 +15,11 @@ const wide = () => {
 </script>
 
 <style scoped>
+.states{
+    width:80vw;
+    height: 20vh;
+    margin: 20px auto;
+    border: 5px solid #000000;
+    background-color: white;
+}
 </style>
