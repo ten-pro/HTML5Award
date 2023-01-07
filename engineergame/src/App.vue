@@ -1,13 +1,11 @@
 <template>
-  <img src="./components/PNG/background.png" class="background">
+  <div>
+    <GameMain />
+  </div>
 </template>
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+import GameMain from './components/GameMain.vue'
 </script>
 <style scoped>
-.background{
-  position:absolute;
-  width:100vw;
-  height:100vh;
-}
 </style>
