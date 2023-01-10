@@ -5,7 +5,7 @@
         <button class="button">↑</button>
         <button class="button">＋</button>
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
-        <p class="detail1">アップブレードの価格が{{ state.next }}％減少</p>
+        <p class="detail1">アップグレードの価格が{{ state.next }}％減少</p>
         <p class="detail2">案件成功時の報酬が{{ state.next }}％増加</p>
     </div>
 </template>
@@ -46,7 +46,9 @@ p{
     height:3vw;
     font-size:1.5vw;
     margin:auto;
-    border-radius: 50%;
+    border-radius: 20%;
+    color:#ffffff;
+    background-color: #00abc5;
 }
 .syain_sum{
     grid-row: 2/3;

@@ -46,7 +46,9 @@ p{
     height:3vw;
     font-size:1.5vw;
     margin:auto;
-    border-radius: 50%;
+    border-radius: 20%;
+    color:#ffffff;
+    background-color: #00abc5;
 }
 .syain_sum{
     grid-row: 2/3;
