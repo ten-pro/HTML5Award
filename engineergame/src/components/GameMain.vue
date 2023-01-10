@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="busyo">
-            <Jinji />
+            <Jinji :topstate="state" />
             <Kaihatu />
         </div>
         <div class="busyo">
@@ -74,22 +74,26 @@ const intervalCallback=()=> {
     state.nowday++;
     state.nouki--;
     if(state.nowday%7==0){
+        //レベルや所属人数を加味して計算するよう修正
         state.misyain+=1;
         state.nowkousuu+=1000;
     }
     if(state.nouki==0){
         if(state.nowkousuu>=state.maxkousuu){
             state.money+=housyuu[state.nowanken];
-            state.nowanken++;
-            state.nowkousuu=0;
-            state.maxkousuu=kousuu[state.nowanken];
-            state.nouki=nouki[state.nowanken];
+            if(state.nowday==365){
+                //１年たった時の処理
+            }else{
+                state.nowanken++;
+                state.nowkousuu=0;
+                state.maxkousuu=kousuu[state.nowanken];
+                state.nouki=nouki[state.nowanken];
+            }
         }
     }
     timeoutId = setTimeout(intervalCallback, 5 * 1000);
 }
 setupfunk();
-// intervalCallback();
 //ここまでが読み込み時の設定
 
 
