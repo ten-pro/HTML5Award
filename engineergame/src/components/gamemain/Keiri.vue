@@ -1,12 +1,12 @@
 <template>
-    <div class="jinji_area container">
+    <div class="keiri_area container">
         <p>LV{{ state.lv }}</p>
-        <p class="busyo_name">人事部</p>
+        <p class="busyo_name">経理部</p>
         <button class="button">↑</button>
         <button class="button">＋</button>
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
-        <p class="detail1">１週間ごとに{{ state.next }}人ずつ</p>
-        <p class="detail2">社員が増える</p>
+        <p class="detail1">アップブレードの価格が{{ state.next }}％減少</p>
+        <p class="detail2">案件成功時の報酬が{{ state.next }}％増加</p>
     </div>
 </template>
 <script setup>
@@ -30,7 +30,7 @@ p{
 .busyo_name{
     font-size:3vw;
 }
-.jinji_area{
+.keiri_area{
     width:40vw;
     height:35vh;
     background-color: white;
