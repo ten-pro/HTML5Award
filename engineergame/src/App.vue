@@ -1,10 +1,10 @@
 <template>
   <div>
-    <GameMain />
+    <Home />
   </div>
 </template>
 <script setup>
-import GameMain from './components/GameMain.vue'
+import Home from './components/Home.vue'
 </script>
 <style scoped>
 </style>
