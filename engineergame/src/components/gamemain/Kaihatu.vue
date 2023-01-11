@@ -2,25 +2,53 @@
     <div class="kaihatu_area container">
         <p>LV{{ state.lv }}</p>
         <p class="busyo_name">開発部</p>
-        <button class="button">↑</button>
-        <button class="button">＋</button>
+
+        <!-- 1 @clickでlvupファンクションを実行 -->
+        <button class="button" @click="lvup">↑</button>
+        <button class="button" @click="addsyain">＋</button>
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
-        <p class="detail1">１週間ごとに</p>
-        <p class="detail2">{{ state.next }}工数進む</p>
+        <p class="detail1">１週間ごとに{{ state.next }}工数ずつ進む</p>
+        <p class="detail2">(小数点以下は確率に変換)</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
+import swal from 'sweetalert';
 let state = reactive({
     lv:1,
     syain_sum:0,
-    next:1,
+    next:0,
 })
-window.onload = function () {
+const props = defineProps({
+    topstate: Object,
     
+})
+
+const lvup = () => {
+    state.lv++;
+
+    //1人分の10工数×所属社員人数×今の部署レベル
+    state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100
+
+    //2 kaihatu_lvupという設定している名前とstateの値でemitsを実行
+    emits("kaihatu_lvup", state) 
 }
-const wide = () => {
+const addsyain = () => {
+    if(props.topstate.misyain>0){
+        state.syain_sum++;
+        state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100
+        emits("kaihatu_addsyain", state) 
+    }else{
+        swal("未所属社員が0名です","","error")
+    }
 }
+
+
+const emits = defineEmits([
+    //3 kaihatu_lvupという名前でemitsが呼ばれると発火し、親側に値を送信
+    "kaihatu_lvup",
+    "kaihatu_addsyain"
+]) 
 </script>
 <style scoped>
 p{
