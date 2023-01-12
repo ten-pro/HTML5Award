@@ -1,0 +1,21 @@
+
+
+//ユーザーテーブル
+CREATE TABLE user_tbl(
+    user_id         INT             AUTO_INCREMENT  ,
+    user_pass       VARCHAR(255)    NOT NULL        ,
+    user_name       VARCHAR(30)     NOT NULL        ,
+    PRIMARY KEY     (user_id)
+);
+
+//クリア情報テーブル
+CREATE TABLE clear_tbl(
+    clear_id        INT             AUTO_INCREMENT  ,
+    user_id         INT             NOT NULL        ,
+    clear_time      INT             NOT NULL        ,
+    clear_employee  INT             NOT NULL        ,
+    clear_money     INT             NOT NULL        ,
+    clear_score     INT             NOT NULL        ,
+    PRIMARY KEY     (clear_id)
+);
+
