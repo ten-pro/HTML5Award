@@ -10,17 +10,16 @@ require_once './ClearDAO.php';
 
 $data = false;
 
-//login_userの引数がある時の処理
-if (isset($_POST['login_user']) == true) {
-    $class = new enGame();
-    $data = $class->login_user($_POST['user_name'], $_POST['user_pass']);
-}
-
-
-//create_userの引数がある時の処理
-if (isset($_POST['create_user']) == true) {
-    $class = new enGame();
-    $data = $class->create_user($_POST['user_name'], $_POST['user_pass']);
+//create_clear_infomationの引数がある時の処理
+if (isset($_POST['create_clear_infomation']) == true) {
+    $class = new enGameClear();
+    $data = $class->create_clear_information(
+        $_POST['user_id'],
+        $_POST['clear_time'],
+        $_POST['clear_emplyee'],
+        $_POST['clear_money'],
+        $_POST['clear_score']
+    );
 }
 
 

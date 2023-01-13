@@ -1,5 +1,5 @@
 <?php
-class enGame
+class enGameClear
 {
     function get_pdo()
     {

@@ -13,6 +13,14 @@
         <input type="button" value="Login" @click="loginchk"><br>
         <input type="button" value="Create" @click="create_user"><br>
         <p>{{login}}</p>
+        <h3>クリアデータ作成</h3>
+        user_id<input type="text" v-model="clear_user_id"><br>
+        clear_time<input type="text" v-model="clear_time"><br>
+        clear_emplyee<input type="text" v-model="clear_emplyee"><br>
+        clear_money<input type="text" v-model="clear_money"><br>
+        clear_score<input type="text" v-model="clear_score"><br>
+        <input type="button" value="Create" @click="create_clear_infomation"><br>
+        <input type="button" value="Random" @click="random"><br>
     </div>
     <!-- vue.jsのCDN -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

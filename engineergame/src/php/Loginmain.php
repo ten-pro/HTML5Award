@@ -12,14 +12,14 @@ $data = false;
 
 //login_userの引数がある時の処理
 if (isset($_POST['login_user']) == true) {
-    $class = new enGame();
+    $class = new enGameLogin();
     $data = $class->login_user($_POST['user_name'], $_POST['user_pass']);
 }
 
 
 //create_userの引数がある時の処理
 if (isset($_POST['create_user']) == true) {
-    $class = new enGame();
+    $class = new enGameLogin();
     $data = $class->create_user($_POST['user_name'], $_POST['user_pass']);
 }
 

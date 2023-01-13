@@ -1,5 +1,5 @@
 <?php
-class enGame
+class enGameLogin
 {
     function get_pdo()
     {
