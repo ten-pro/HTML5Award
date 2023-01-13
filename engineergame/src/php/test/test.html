@@ -8,9 +8,10 @@
 </head>
 <body>
     <div id="app">
-        name<input type="text" v-model="login_name"><br>
-        pass<input type="text" v-model="login_pass"><br>
+        name<input type="text" v-model="user_name"><br>
+        pass<input type="text" v-model="user_pass"><br>
         <input type="button" value="Login" @click="loginchk"><br>
+        <input type="button" value="Create" @click="create_user"><br>
         <p>{{login}}</p>
     </div>
     <!-- vue.jsのCDN -->

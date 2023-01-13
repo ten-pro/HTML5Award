@@ -22,7 +22,9 @@ class enGame
         if ($search == null) {
             $data = false;
         } else {
-            $data = true;
+            foreach ($search as $row) {
+                array_push($data, array('id' => $row['user_id'], 'chk' => true));
+            }
         }
         return $data;
     }
@@ -36,9 +38,9 @@ class enGame
         $ps->execute();
         $search = $ps->fetchAll();
         if ($search == null) {
-            $data = true;
-        } else {
             $data = false;
+        } else {
+            $data = true;
         }
         return $data;
     }
@@ -54,7 +56,7 @@ class enGame
         $ps->bindValue(2, $pass, PDO::PARAM_STR);
 
         $chkname = $this->chk_name($name);
-        if ($chkname == true) {
+        if ($chkname == false) {
             $ps->execute();
             $data = true;
         } else {

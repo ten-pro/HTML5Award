@@ -6,7 +6,7 @@ header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json; charset=UTF-8');
 
 //DAOの読み込み
-require_once './LoginDAO.php';
+require_once './ClearDAO.php';
 
 $data = false;
 
