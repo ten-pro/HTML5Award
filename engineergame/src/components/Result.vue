@@ -1,5 +1,8 @@
 <template>
     <div class="main">
+        <div class="botan">
+            <Return />
+        </div>
         <div class="title_area">
             <p class="p1">result</p>
         </div>
@@ -30,6 +33,7 @@ import Kaihatu from './result/Kaihatu.vue'
 import Kenkou from './result/Kenkou.vue'
 import Ninzu from './result/Ninzu.vue'
 import Level from './result/Level.vue'
+import Return from './result/Return.vue'
 </script>
 <style>
 .title_area{
@@ -55,6 +59,10 @@ import Level from './result/Level.vue'
 }
 .koko{
     font-size: 30px;
+}
+.botan{
+    position:absolute;
+    margin:1.5vw 2.3vw;
 }
 
 
