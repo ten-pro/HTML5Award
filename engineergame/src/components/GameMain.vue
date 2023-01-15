@@ -40,6 +40,7 @@ import Jinji from './gamemain/Jinji.vue'
 import Kaihatu from './gamemain/Kaihatu.vue'
 import Keiri from './gamemain/Keiri.vue'
 import Kenkou from './gamemain/Kenkou.vue'
+document.body.style.backgroundImage = 'url(../components/PNG/background.png)';
 let timeoutId;
 let state = reactive({
     money:0,
@@ -121,7 +122,7 @@ const intervalCallback=()=> {
     }
     if(state.nouki==0){
         if(state.nowkousuu>=state.maxkousuu){
-            state.money+=housyuu[state.nowanken]*Math.floor(housyuu[state.nowanken]*keiri_state.next);
+            state.money+=housyuu[state.nowanken]+Math.floor(housyuu[state.nowanken]*keiri_state.next);
             if(state.nowday==365){
                 //クリア時の処理
             }else{

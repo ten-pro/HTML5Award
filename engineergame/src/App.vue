@@ -1,10 +1,21 @@
-<template>
+<!-- <template>
   <div>
     <Gamemain />
   </div>
 </template>
 <script setup>
 import Gamemain from './components/Gamemain.vue'
+</script>
+<style scoped>
+</style> -->
+
+<template>
+  <div>
+    <Ranking />
+  </div>
+</template>
+<script setup>
+import Ranking from './components/Ranking.vue'
 </script>
 <style scoped>
 </style>
