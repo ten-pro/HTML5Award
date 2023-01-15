@@ -1,13 +1,13 @@
-<!-- <template>
+<template>
   <div>
-    <Home />
+    <Gamemain />
   </div>
 </template>
 <script setup>
-import Home from './components/Home.vue'
+import Gamemain from './components/Gamemain.vue'
 </script>
 <style scoped>
-</style> -->
+</style>
 
 <!-- <template>
   <div>
@@ -20,13 +20,13 @@ import Result from './components/Result.vue'
 <style scoped>
 </style> -->
 
-<template>
+<!-- <template>
   <div>
-    <Login />
+    <Home />
   </div>
 </template>
 <script setup>
-import Login from './components/login/Login.vue'
+import Home from './components/Home.vue'
 </script>
 <style scoped>
-</style>
+</style> -->
