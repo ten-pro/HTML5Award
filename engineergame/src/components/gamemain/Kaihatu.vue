@@ -7,6 +7,7 @@
         <button class="button" @click="lvup">↑</button>
         <button class="button" @click="addsyain">＋</button>
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
+        <p class="price">-{{ state.price - Math.floor(state.price*props.keiri_state.next) }}万円</p>
         <p class="detail1">１週間ごとに{{ state.next }}工数ずつ進む</p>
         <p class="detail2">(小数点以下は確率に変換)</p>
     </div>
@@ -18,20 +19,26 @@ let state = reactive({
     lv:1,
     syain_sum:0,
     next:0,
+    price:100,
 })
 const props = defineProps({
     topstate: Object,
-    
+    keiri_state:Object,
+    kenkou_state:Object,
 })
 
 const lvup = () => {
-    state.lv++;
+    if(props.topstate.money>=100*state.lv){
+        state.price=100*state.lv - Math.floor(100*state.lv*props.keiri_state.next);
+        state.lv++;
+        //1人分の10工数×所属社員人数×今の部署レベル
+        state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100
 
-    //1人分の10工数×所属社員人数×今の部署レベル
-    state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100
-
-    //2 kaihatu_lvupという設定している名前とstateの値でemitsを実行
-    emits("kaihatu_lvup", state) 
+        //2 kaihatu_lvupという設定している名前とstateの値でemitsを実行
+        emits("kaihatu_lvup", state) 
+    }else{
+        swal("資産が足りません","","error")
+    }
 }
 const addsyain = () => {
     if(props.topstate.misyain>0){
@@ -66,6 +73,7 @@ p{
 }
 .container{
     display:grid;
+    position:relative;
     grid-template-rows: 25% 25% 25% 25%;
     grid-template-columns: 25% 50% 12.5% 12.5%;
 }
@@ -81,6 +89,14 @@ p{
 .syain_sum{
     grid-row: 2/3;
     grid-column: 2/3;
+}
+.price{
+    position:absolute;
+    grid-row:2/3;
+    grid-column:3/5;
+    color:red;
+    font-size:1.5vw;
+    top:0px;
 }
 .detail1{
     grid-row:3/4;

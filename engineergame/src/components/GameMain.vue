@@ -25,12 +25,12 @@
         </div>
         <div class="busyo">
             <!-- 4 jinji_lvup(左)という名前の子コンポーネントのemitsを受け取り、jinji_lvup(右)という関数を実行 -->
-            <Jinji :topstate="state" @jinji_lvup="jinji_lvup" @jinji_addsyain="jinji_addsyain"/>
-            <Kaihatu :topstate="state" @kaihatu_lvup="kaihatu_lvup" @kaihatu_addsyain="kaihatu_addsyain"/>
+            <Jinji :topstate="state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @jinji_lvup="jinji_lvup" @jinji_addsyain="jinji_addsyain"/>
+            <Kaihatu :topstate="state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @kaihatu_lvup="kaihatu_lvup" @kaihatu_addsyain="kaihatu_addsyain"/>
         </div>
         <div class="busyo">
-            <Keiri :topstate="state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
-            <Kenkou :topstate="state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
+            <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
+            <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
         </div>
     </div>
 </template>
@@ -53,22 +53,27 @@ let state = reactive({
 let jinji_state = reactive({
     lv:1,
     syain_sum:0,
-    next:1,
+    next:0,
+    price:100,
 })
 let kaihatu_state = reactive({
     lv:1,
     syain_sum:0,
-    next:1,
+    next:0,
+    price:100,
 })
 let keiri_state = reactive({
     lv:1,
     syain_sum:0,
-    next:1,
+    next:0,
+    price:100,
 })
 let kenkou_state = reactive({
     lv:1,
     syain_sum:0,
-    next:1,
+    next:0,
+    price:100,
+    percent:0.5,
 })
 //難易度別初期ステ
 let startstates = reactive([
@@ -94,6 +99,7 @@ const setupfunk = () => {
 const intervalCallback=()=> {
     state.nowday++;
     state.nouki--;
+    timeoutId = setTimeout(intervalCallback, 5 * 1000);
     if(state.nowday%7==0 && state.nowday!=0){
         let addnin=0.5*jinji_state.syain_sum*(0.9+0.1*jinji_state.lv)
         let random=0;
@@ -101,30 +107,43 @@ const intervalCallback=()=> {
             random=1;
         }
         state.misyain+=Math.floor(addnin)+1*random;
-        console.log(addnin)
-        state.nowkousuu+=1000;
+        //バックレと病気の確率
+        let bakkure=0;
+        let byouki=0;
+        for(let i=0;i<kaihatu_state.syain_sum;i++){
+            if(Math.random() * 1 <= kenkou_state.percent){
+                bakkure++;
+            }else if(Math.random() * 1 <= kenkou_state.percent){
+                byouki++;
+            }
+        }
+        state.nowkousuu+=kaihatu_state.next - 10*(bakkure+byouki);
     }
     if(state.nouki==0){
         if(state.nowkousuu>=state.maxkousuu){
-            state.money+=housyuu[state.nowanken];
+            state.money+=housyuu[state.nowanken]*Math.floor(housyuu[state.nowanken]*keiri_state.next);
             if(state.nowday==365){
-                //１年たった時の処理
+                //クリア時の処理
             }else{
                 state.nowanken++;
                 state.nowkousuu=0;
                 state.maxkousuu=kousuu[state.nowanken];
                 state.nouki=nouki[state.nowanken]-state.nowday;
             }
+        }else{
+            //ゲームオーバー処理
+            timeclear();
         }
     }
-    timeoutId = setTimeout(intervalCallback, 5 * 1000);
 }
 setupfunk();
 //ここまでが読み込み時の設定
 
 //5 emitsで受け取った値をjinjiという変数に入れてなんやかんやする
 const jinji_lvup = (jinji) => {
-    jinji_state.lv=jinji.lv;
+    jinji_state=jinji;
+    state.money-=jinji_state.price;
+    jinji_state.price+=100;
 }
 const jinji_addsyain = (jinji) => {
     jinji_state=jinji;
@@ -132,7 +151,9 @@ const jinji_addsyain = (jinji) => {
 }
 
 const kaihatu_lvup = (kaihatu) => {
-    kaihatu_state.lv=kaihatu.lv;
+    kaihatu_state=kaihatu;
+    state.money-=kaihatu_state.price;
+    kaihatu_state.price+=100;
 }
 const kaihatu_addsyain = (kaihatu) => {
     kaihatu_state=kaihatu;
@@ -140,7 +161,9 @@ const kaihatu_addsyain = (kaihatu) => {
 }
 
 const keiri_lvup = (keiri) => {
-    keiri_state.lv=keiri.lv;
+    keiri_state=keiri;
+    state.money-=keiri_state.price;
+    keiri_state.price+=100;
 }
 const keiri_addsyain = (keiri) => {
     keiri_state=keiri;
@@ -148,7 +171,9 @@ const keiri_addsyain = (keiri) => {
 }
 
 const kenkou_lvup = (kenkou) => {
-    kenkou_state.lv=kenkou.lv;
+    kenkou_state=kenkou;
+    state.money-=kenkou_state.price;
+    kenkou_state.price+=100;
 }
 const kenkou_addsyain = (kenkou) => {
     kenkou_state=kenkou;
