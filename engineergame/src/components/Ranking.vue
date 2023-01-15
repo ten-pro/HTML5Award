@@ -2,7 +2,7 @@
     <div>
         <div class="rankingRow">
             <div class="ranking1">
-                <div class="rankingName1">{{ score[0].name != null ? score[0].name : "-" }}</div>
+                <div class="rankingName1" v-vind="score[0].name">{{ score[0].name != null ? score[0].name : "-" }}</div>
                 <div class="rankingScore1">{{ score[0].employee != null ? score[0].employee : "-" }}</div>
             </div>
             <div class="ranking2">
@@ -28,9 +28,15 @@
 import axios from "axios"
     import { reactive } from "vue"
     // let state = reactive({})
-    let score = reactive({})
+    let score = reactive([
+        {name:"",employee:""},
+        {name:"",employee:""},
+        {name:"",employee:""},
+        {name:"",employee:""},
+        {name:"",employee:""},
+    ])
 
-   
+    window.onload = function(){
     axios
         .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
             get_score_rank: ''
@@ -40,12 +46,13 @@ import axios from "axios"
             }
         })
         .then(function (res){
-
-            score = res.data.employee_rank
-            // console.log()
+            for(let i=0;i<score.length;i++){
+                score[i]=res.data.employee_rank[i];
+            }
+            console.log(score[0].name)
 
         })
-    
+    }
 
 
 
