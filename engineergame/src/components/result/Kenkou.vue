@@ -1,13 +1,13 @@
 <template>
     <div class="kenkou_area">
-        <p class="p9">健康管理部<br>Lv.{{ kenkou.level }}</p>
+        <p class="p9">健康管理部<br>Lv.{{ topstate.kenkou_lev }}</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let kenkou = reactive({
-    level:0
-})
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .kenkou_area{

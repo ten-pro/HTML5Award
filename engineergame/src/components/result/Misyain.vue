@@ -1,13 +1,13 @@
 <template>
     <div class="misyain_area">
-        <p class="p3">未所属社員:{{ mi.nin }}人</p>
+        <p class="p3">未所属社員:{{ topstate.misyain }}人</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let mi = reactive({
-    nin:0
-})
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .misyain_area{

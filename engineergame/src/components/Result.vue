@@ -7,17 +7,17 @@
             <p class="p1">result</p>
         </div>
         <div class="koko">
-            <Shisan />
-            <Misyain />
-            <Nissu />
-            <Ninzu />
+            <Shisan :topstate="state"/>
+            <Misyain :topstate="state"/>
+            <Nissu :topstate="state"/>
+            <Ninzu :topstate="state"/>
             <Level />
         </div>
         <div class="container">
-            <Jinji />
-            <Keiri />
-            <Kaihatu />
-            <Kenkou />
+            <Jinji :topstate="state"/>
+            <Keiri :topstate="state"/>
+            <Kaihatu :topstate="state"/>
+            <Kenkou :topstate="state"/>
         </div>
     </div>
     
@@ -34,6 +34,17 @@ import Kenkou from './result/Kenkou.vue'
 import Ninzu from './result/Ninzu.vue'
 import Level from './result/Level.vue'
 import Return from './result/Return.vue'
+
+let state = reactive({
+    shisan:0,
+    misyain:0,
+    nissu:0,
+    ninzu:0,
+    jinji_lev:0,
+    keiri_lev:0,
+    kaihatu_lev:0,
+    kenkou_lev:0
+})
 </script>
 <style>
 .title_area{

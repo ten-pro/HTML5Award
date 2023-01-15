@@ -1,13 +1,14 @@
 <template>
     <div class="shisan_area">
-        <p class="p2">資産:{{shisan.money}}万</p>
+        <p class="p2">資産:{{topstate.shisan}}万</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let shisan = reactive({
-    money:0
-})
+
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .shisan_area{
