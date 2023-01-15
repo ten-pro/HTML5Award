@@ -1,13 +1,13 @@
 <template>
     <div class="ninzu_area">
-        <p class="p10">所属人数:{{ syozoku.nin }}人</p>
+        <p class="p10">所属人数:{{ topstate.ninzu }}人</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let syozoku = reactive({
-    nin:0
-})
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .ninzu_area{

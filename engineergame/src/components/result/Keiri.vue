@@ -1,13 +1,13 @@
 <template>
     <div class="keiri_area">
-        <p class="p7">経理部<br>Lv.{{ keiri.level }}</p>
+        <p class="p7">経理部<br>Lv.{{ topstate.keiri_lev }}</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let keiri = reactive({
-    level:0
-})
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .keiri_area{
