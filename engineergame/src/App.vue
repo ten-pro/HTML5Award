@@ -8,3 +8,14 @@ import Home from './components/Home.vue'
 </script>
 <style scoped>
 </style>
+
+<!-- <template>
+  <div>
+    <Result />
+  </div>
+</template>
+<script setup>
+import Result from './components/Result.vue'
+</script>
+<style scoped>
+</style> -->
