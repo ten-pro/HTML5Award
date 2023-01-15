@@ -58,6 +58,7 @@ margin-top: 15%;
 .account {
     background-color: transparent;
     border: transparent;
+    cursor: pointer;
 }
 .account-svg:hover {
     fill: blue;
@@ -65,6 +66,7 @@ margin-top: 15%;
 .ranking-button {
     background-color: transparent;
     border: transparent;
+    cursor: pointer;
 }
 .ranking-svg:hover {
    background-color: yellow;
@@ -134,5 +136,7 @@ color: rgb(0, 0, 0);
   background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 85%);
     transition: all 0.3s ease;
   }
-
+.btn-9:hover {
+    background-image: linear-gradient(315deg, #b621fe 0%, #1fd1f9 85%);
+}
 </style>
