@@ -1,13 +1,13 @@
 <template>
     <div class="kaihatu_area">
-        <p class="p8">開発部<br>Lv.{{ kaihatu.level }}</p>
+        <p class="p8">開発部<br>Lv.{{ topstate.kaihatu_lev }}</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let kaihatu = reactive({
-    level:0
-})
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .kaihatu_area{

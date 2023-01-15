@@ -1,13 +1,13 @@
 <template>
     <div class="jinji_area">
-        <p class="p6">人事部<br>Lv.{{jinji.level}}</p>
+        <p class="p6">人事部<br>Lv.{{topstate.jinji_lev}}</p>
     </div>
 </template>
 <script setup>
 import {reactive} from "vue"
-let jinji = reactive({
-    level:0
-})
+const props = defineProps({
+    topstate: Object,
+}) 
 </script>
 <style>
 .jinji_area{
