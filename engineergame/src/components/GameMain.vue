@@ -133,6 +133,7 @@ const intervalCallback=()=> {
         }else{
             //ゲームオーバー処理
             timeclear();
+            swal("ゲームオーバー！","リザルト画面へ","error")
         }
     }
 }
