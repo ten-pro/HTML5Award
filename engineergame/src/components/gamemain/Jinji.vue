@@ -49,7 +49,6 @@ const addsyain = () => {
     }
 }
 
-
 const emits = defineEmits([
     //3 jinji_lvupという名前でemitsが呼ばれると発火し、親側に値を送信
     "jinji_lvup",

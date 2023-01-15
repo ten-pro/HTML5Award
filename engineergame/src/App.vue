@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div>
     <Gamemain />
   </div>
@@ -7,9 +7,9 @@
 import Gamemain from './components/Gamemain.vue'
 </script>
 <style scoped>
-</style> -->
+</style>
 
-<template>
+<!-- <template>
   <div>
     <Ranking />
   </div>
@@ -18,7 +18,7 @@ import Gamemain from './components/Gamemain.vue'
 import Ranking from './components/Ranking.vue'
 </script>
 <style scoped>
-</style>
+</style> -->
 
 <!-- <template>
   <div>

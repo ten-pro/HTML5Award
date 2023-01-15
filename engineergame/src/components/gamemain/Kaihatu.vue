@@ -13,7 +13,7 @@
     </div>
 </template>
 <script setup>
-import {reactive} from "vue"
+import {reactive,watch} from "vue"
 import swal from 'sweetalert';
 let state = reactive({
     lv:1,
@@ -25,6 +25,7 @@ const props = defineProps({
     topstate: Object,
     keiri_state:Object,
     kenkou_state:Object,
+    kaihatu_state:Object,
 })
 
 const lvup = () => {
@@ -50,6 +51,13 @@ const addsyain = () => {
     }
 }
 
+//state.syain_sumを監視
+watch(
+  () => state.syain_sum,
+  (sum, prevSum) => {
+    state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100;
+  }
+)
 
 const emits = defineEmits([
     //3 kaihatu_lvupという名前でemitsが呼ばれると発火し、親側に値を送信
