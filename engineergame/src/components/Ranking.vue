@@ -1,38 +1,56 @@
 <template>
     <div>
         <div class="rankingRow">
-        <div class="ranking1">
-            <div class="rankingName1">name</div>
-            <div class="rankingScore1">999</div>
+            <div class="ranking1">
+                <div class="rankingName1">{{ score[0].name != null ? score[0].name : "-" }}</div>
+                <div class="rankingScore1">{{ score[0].employee != null ? score[0].employee : "-" }}</div>
+            </div>
+            <div class="ranking2">
+                <div class="rankingName2">{{ score[1].name != null ? score[1].name : "-" }}</div>
+                <div class="rankingScore2">{{ score[1].employee != null ? score[1].employee : "-" }}</div>
+            </div>
+            <div class="ranking3">
+                <div class="rankingName3">{{ score[2].name != null ? score[2].name : "-" }}</div>
+                <div class="rankingScore3">{{ score[2].employee != null ? score[2].employee : "-" }}</div>
+            </div>
+            <div class="ranking4">
+                <div class="rankingName4">{{ score[3].name != null ? score[3].name : "-" }}</div>
+                <div class="rankingScore4">{{ score[3].employee != null ? score[3].employee : "-" }}</div>
+            </div>
+            <div class="ranking5">
+                <div class="rankingName5">{{ score[4].name != null ? score[4].name : "-" }}</div>
+                <div class="rankingScore5">{{ score[4].employee != null ? score[4].employee : "-" }}</div>
+            </div>
         </div>
-        <div class="ranking2">
-        <div class="rankingName2">name</div>
-        <div class="rankingScore2">999</div>
-        </div>
-        <div class="ranking3">
-            <div class="rankingName3">name</div>
-            <div class="rankingScore3">999</div>
-        </div>
-        <div class="ranking4">
-            <div class="rankingName4">name</div>
-            <div class="rankingScore4">999</div>
-        </div>
-        <div class="ranking5">
-            <div class="rankingName5">name</div>
-            <div class="rankingScore5">999</div>
-        </div>
-    </div>
     </div>
 </template>
 <script setup>
-    import {
-        reactive
-    } from "vue"
-    let state = reactive({
+import axios from "axios"
+    import { reactive } from "vue"
+    // let state = reactive({})
+    let score = reactive({})
 
-    })
+   
+    axios
+        .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+            get_score_rank: ''
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(function (res){
 
-    const wide = () => {}
+            score = res.data.employee_rank
+            // console.log()
+
+        })
+    
+
+
+
+
+
 </script>
 <style scoped>
 .rankingRow {
