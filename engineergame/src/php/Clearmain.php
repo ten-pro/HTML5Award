@@ -22,6 +22,12 @@ if (isset($_POST['create_clear_infomation']) == true) {
     );
 }
 
+//get_score_rankの引数がある時の処理
+if (isset($_POST['get_score_rank']) == true) {
+    $class = new enGameClear();
+    $data = $class->score_rank();
+}
+
 
 //arrayの中身をJSON形式に変換している
 $json_array = json_encode($data);
