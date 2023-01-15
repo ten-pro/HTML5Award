@@ -1,7 +1,7 @@
 body{
     margin:0px;
     background-image: url("../components/PNG/background.png");
-    background-image: url("../components/PNG/rankingback.png");
+    /* background-image: url("../components/PNG/rankingback.png"); */
 
   background-size: 100vw 100vh;
 }

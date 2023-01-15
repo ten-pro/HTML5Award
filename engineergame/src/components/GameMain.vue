@@ -26,7 +26,7 @@
         <div class="busyo">
             <!-- 4 jinji_lvup(左)という名前の子コンポーネントのemitsを受け取り、jinji_lvup(右)という関数を実行 -->
             <Jinji :topstate="state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @jinji_lvup="jinji_lvup" @jinji_addsyain="jinji_addsyain"/>
-            <Kaihatu :topstate="state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @kaihatu_lvup="kaihatu_lvup" @kaihatu_addsyain="kaihatu_addsyain"/>
+            <Kaihatu :topstate="state" :kaihatu_state="kaihatu_state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @kaihatu_lvup="kaihatu_lvup" @kaihatu_addsyain="kaihatu_addsyain"/>
         </div>
         <div class="busyo">
             <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
@@ -40,8 +40,9 @@ import Jinji from './gamemain/Jinji.vue'
 import Kaihatu from './gamemain/Kaihatu.vue'
 import Keiri from './gamemain/Keiri.vue'
 import Kenkou from './gamemain/Kenkou.vue'
-document.body.style.backgroundImage = 'url(../components/PNG/background.png)';
 let timeoutId;
+let bakkure=0;
+let byouki=0;
 let state = reactive({
     money:0,
     misyain:0,
@@ -109,8 +110,9 @@ const intervalCallback=()=> {
         }
         state.misyain+=Math.floor(addnin)+1*random;
         //バックレと病気の確率
-        let bakkure=0;
-        let byouki=0;
+        state.nowkousuu+=kaihatu_state.next - 10*(byouki);
+        byouki=0;
+        bakkure=0;
         for(let i=0;i<kaihatu_state.syain_sum;i++){
             if(Math.random() * 1 <= kenkou_state.percent){
                 bakkure++;
@@ -118,7 +120,12 @@ const intervalCallback=()=> {
                 byouki++;
             }
         }
-        state.nowkousuu+=kaihatu_state.next - 10*(bakkure+byouki);
+        kaihatu_state.syain_sum-=bakkure;
+        swal("開発部の社員がブラックすぎて"+bakkure+"人バックレた！！","バックレた人はもう戻ってこないぞ","error")
+        .then(()=>{
+            swal("開発部の社員がブラックすぎて"+byouki+"人病気にかかった！！","病気になった人の分１週間工数が増えないぞ","error");
+        });
+        console.log("aaa")
     }
     if(state.nouki==0){
         if(state.nowkousuu>=state.maxkousuu){

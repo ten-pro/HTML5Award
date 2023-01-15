@@ -8,7 +8,7 @@
         <button class="button" @click="addsyain">＋</button>
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
         <p class="price">-{{ state.price - Math.floor(state.price*state.next) }}万円</p>
-        <p class="detail1">アップグレードの価格が{{ Math.floor(state.next*1000)/10 }}％減少</p>
+        <p class="detail1">レベルアップの価格が{{ Math.floor(state.next*1000)/10 }}％減少(max50%)</p>
         <p class="detail2">案件成功時の報酬が{{ Math.floor(state.next*1000)/10 }}％増加</p>
     </div>
 </template>
@@ -30,7 +30,11 @@ const lvup = () => {
     if(props.topstate.money>=100*state.lv){
         state.price=100*state.lv;
         state.lv++;
-        state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
+        if(Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000>=0.5){
+            state.next=0.5;
+        }else{
+            state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
+        }
         //2 keiri_lvupという設定している名前とstateの値でemitsを実行
         emits("keiri_lvup", state) 
     }else{
