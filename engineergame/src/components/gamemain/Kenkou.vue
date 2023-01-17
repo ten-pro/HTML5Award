@@ -31,7 +31,11 @@ const lvup = () => {
     if(props.topstate.money>=100*state.lv){
         state.price=100*state.lv;
         state.lv++;
-        state.next=Math.floor((0.03*state.syain_sum+0.01*(state.lv-1))*1000)/1000;
+        if(Math.floor((0.03*state.syain_sum+0.01*(state.lv-1))*1000)/1000<0.5){
+            state.next=Math.floor((0.03*state.syain_sum+0.01*(state.lv-1))*1000)/1000;
+        }else{
+            state.next=0;
+        }
         state.percent=0.5-state.next;
         //2 kenkou_lvupという設定している名前とstateの値でemitsを実行
         emits("kenkou_lvup", state) 
@@ -42,7 +46,11 @@ const lvup = () => {
 const addsyain = () => {
     if(props.topstate.misyain>0){
         state.syain_sum++;
-        state.next=Math.floor((0.03*state.syain_sum+0.01*(state.lv-1))*1000)/1000;
+        if(Math.floor((0.03*state.syain_sum+0.01*(state.lv-1))*1000)/1000>=0){
+            state.next=Math.floor((0.03*state.syain_sum+0.01*(state.lv-1))*1000)/1000;
+        }else{
+            state.next=0;
+        }
         state.percent=0.5-state.next;
         emits("kenkou_addsyain", state) 
     }else{
