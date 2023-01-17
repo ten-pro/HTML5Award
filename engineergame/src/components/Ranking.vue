@@ -67,8 +67,8 @@ import axios from "axios"
         {name:"",employee:""},
         {name:"",employee:""},
         {name:"",employee:""},
+        {rank:"",score:""}
     ])
-
     window.onload = function(){
     axios
         .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
@@ -82,9 +82,25 @@ import axios from "axios"
             for(let i=0;i<score.length;i++){
                 score[i]=res.data.employee_rank[i];
             }
-            console.log(score[0].name)
+            // console.log(score[0].name)
 
         })
+
+        axios
+            .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                user_id: this.user_id = 0,
+                myrank: ''
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(function (res) {
+                // (response) => (console.log(response.data))
+                console.log(res.data)
+                // myScore = response.data
+            }
+        )
     }
 
 
