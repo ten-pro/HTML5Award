@@ -13,7 +13,7 @@
     </div>
 </template>
 <script setup>
-import {reactive} from "vue"
+import {reactive,watch} from "vue"
 import swal from 'sweetalert';
 let state = reactive({
     lv:1,
@@ -57,6 +57,13 @@ const emits = defineEmits([
     "keiri_lvup",
     "keiri_addsyain"
 ]) 
+
+watch(
+  () => state.syain_sum,
+  (sum, prevSum) => {
+    state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000;
+  }
+)
 </script>
 <style scoped>
 p{

@@ -76,6 +76,7 @@ let kaihatu_state = reactive({
     syain_sum:0,
     next:0,
     price:100,
+    kousuu:10,
 })
 let keiri_state = reactive({
     lv:1,
@@ -138,7 +139,7 @@ const intervalCallback=()=> {
         }
         state.misyain+=Math.floor(addnin)+1*random;
         //バックレと病気の確率
-        state.nowkousuu+=kaihatu_state.next - 10*(byouki);
+        state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(byouki);
         byouki=0;
         bakkure=0;
         for(let i=0;i<kaihatu_state.syain_sum;i++){
@@ -172,14 +173,14 @@ const intervalCallback=()=> {
         }
     }
     // if(Math.random() * 1 <= 0.05){
-    //     state.nowevent = Math.floor(Math.random() * (goodeventtitle.length - 1));
-    //     if(Math.random() * 1 <= 0.5){
-    //         //いいイベント
-    //         state.eventstate=true;
-    //     }else{
-    //         //悪いイベント
-    //         state.eventstate=false;
-    //     }
+        state.nowevent = Math.floor(Math.random() * (goodeventtitle.length - 1));
+        if(Math.random() * 1 <= 0.5){
+            //いいイベント
+            state.eventstate=true;
+        }else{
+            //悪いイベント
+            state.eventstate=false;
+        }
         eventfunk();
     // }
 }
@@ -188,26 +189,55 @@ setupfunk();
 
 const eventfunk=()=>{
     //イベント作成から
-    switch(state.nowevent){
-        case 0:
+    if(state.eventstate==true){
+        switch(state.nowevent){
+            case 0:
+                jinji_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
+                kaihatu_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
+                keiri_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
+                kenkou_state.syain_sum=Math.floor(jinji_state.syain_sum/.5);
+            break;
 
-        break;
+            case 1:
+                state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(Math.floor(kaihatu_state.syain_sum*1.5));
+            break;
 
-        case 1:
+            case 2:
+                state.money=state.money*1.5;
+            break;
 
-        break;
+            case 3:
+                kaihatu_state.kousuu=Math.floor(kaihatu_state.kousuu*0.5)
+            break;
+        }
+        state.noweventtitle=goodeventtitle[state.nowevent];
+        state.noweventmessage=goodeventmessage[state.nowevent];
+        state.isVisible=true;
+    }else{
+        switch(state.nowevent){
+            case 0:
+                jinji_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                kaihatu_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                keiri_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                kenkou_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+            break;
 
-        case 2:
+            case 1:
+                state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(Math.floor(kaihatu_state.syain_sum*0.5));
+            break;
 
-        break;
+            case 2:
+                state.money=state.money*0.5;
+            break;
 
-        case 3:
-
-        break;
+            case 3:
+                kaihatu_state.kousuu=Math.floor(kaihatu_state.kousuu*1.5)
+            break;
+        }
+        state.noweventtitle=badeventtitle[state.nowevent];
+        state.noweventmessage=badeventmessage[state.nowevent];
+        state.isVisible=true;
     }
-    state.noweventtitle=goodeventtitle[0];
-    state.noweventmessage=goodeventmessage[0];
-    state.isVisible=true;
 }
 
 
@@ -314,10 +344,12 @@ p{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background: rgb(255,0,0);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,52,1) 100%);
   width: 600px;
-  height: auto;
+  height: 400px;
   border-radius: 20px;
+  border: 5px solid #000000;
   padding: 20px;
 }
 </style>
