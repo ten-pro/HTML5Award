@@ -32,6 +32,14 @@
             <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
             <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
         </div>
+        <button @click="open">表示</button>
+        <teleport to="body">
+        <div class="modal" id="sample-modal" v-show="state.isVisible" @click="close"></div>
+        <div class="modal-content" v-show="state.isVisible">
+            <p>{{ state.noweventtitle }}</p>
+            <p>{{ state.noweventmessage }}</p>
+        </div>
+        </teleport>
     </div>
 </template>
 <script setup>
@@ -51,6 +59,11 @@ let state = reactive({
     maxkousuu:0,
     nowday:0,
     nowanken:0,//noukiとkousuuの配列とリンクしている変数
+    isVisible:false,
+    nowevent:0,
+    eventstate:false,
+    noweventtitle:"",
+    noweventmessage:"",
 })
 let jinji_state = reactive({
     lv:1,
@@ -63,6 +76,7 @@ let kaihatu_state = reactive({
     syain_sum:0,
     next:0,
     price:100,
+    kousuu:10,
 })
 let keiri_state = reactive({
     lv:1,
@@ -79,7 +93,7 @@ let kenkou_state = reactive({
 })
 //難易度別初期ステ
 let startstates = reactive([
-    {money:1000,syain:8}
+    {money:100000000,syain:8}
 ])
 
 let nouki = reactive([
@@ -90,6 +104,21 @@ let kousuu = reactive([
 ])
 let housyuu = reactive([
     200,500,1000,1500,2500,4000,6500,10000,15000,30000
+])
+let badeventtitle = reactive([
+    "大バックレ騒動","変異ウイルス流行","大円安","機材トラブル"
+])
+let badeventmessage = reactive([
+    "全部署の所属社員が、５割り減る","開発部の５割りが、病気にかかる","費用が大幅に増え、資産の５割りが減る","機材トラブルが起こり、工数進捗５割り減(永続)"
+])
+let goodeventtitle = reactive([
+    "会社評価急上昇","社員心機一転","大円高","最新機種導入"
+])
+let goodeventmessage = reactive([
+    "全部署の所属社員が、５割り増える","開発部の工数が、５割り増し","収入が大幅に増え、資産が１．５倍になる","機材トラブルが起こり、工数進捗5割り増し(永続)"
+])
+let eventvalue = reactive([
+    0.5,0.5,0.5,0.5
 ])
 const setupfunk = () => {
     state.money=startstates[0].money;
@@ -110,7 +139,7 @@ const intervalCallback=()=> {
         }
         state.misyain+=Math.floor(addnin)+1*random;
         //バックレと病気の確率
-        state.nowkousuu+=kaihatu_state.next - 10*(byouki);
+        state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(byouki);
         byouki=0;
         bakkure=0;
         for(let i=0;i<kaihatu_state.syain_sum;i++){
@@ -125,13 +154,13 @@ const intervalCallback=()=> {
         .then(()=>{
             swal("開発部の社員がブラックすぎて"+byouki+"人病気にかかった！！","病気になった人の分１週間工数が増えないぞ","error");
         });
-        console.log("aaa")
     }
     if(state.nouki==0){
         if(state.nowkousuu>=state.maxkousuu){
             state.money+=housyuu[state.nowanken]+Math.floor(housyuu[state.nowanken]*keiri_state.next);
             if(state.nowday==365){
                 //クリア時の処理
+                swal("１年間経営クリア！","リザルト画面へ","success")
             }else{
                 state.nowanken++;
                 state.nowkousuu=0;
@@ -139,14 +168,78 @@ const intervalCallback=()=> {
                 state.nouki=nouki[state.nowanken]-state.nowday;
             }
         }else{
-            //ゲームオーバー処理
             timeclear();
             swal("ゲームオーバー！","リザルト画面へ","error")
         }
     }
+    // if(Math.random() * 1 <= 0.05){
+        state.nowevent = Math.floor(Math.random() * (goodeventtitle.length - 1));
+        if(Math.random() * 1 <= 0.5){
+            //いいイベント
+            state.eventstate=true;
+        }else{
+            //悪いイベント
+            state.eventstate=false;
+        }
+        eventfunk();
+    // }
 }
 setupfunk();
 //ここまでが読み込み時の設定
+
+const eventfunk=()=>{
+    //イベント作成から
+    if(state.eventstate==true){
+        switch(state.nowevent){
+            case 0:
+                jinji_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
+                kaihatu_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
+                keiri_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
+                kenkou_state.syain_sum=Math.floor(jinji_state.syain_sum/.5);
+            break;
+
+            case 1:
+                state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(Math.floor(kaihatu_state.syain_sum*1.5));
+            break;
+
+            case 2:
+                state.money=state.money*1.5;
+            break;
+
+            case 3:
+                kaihatu_state.kousuu=Math.floor(kaihatu_state.kousuu*0.5)
+            break;
+        }
+        state.noweventtitle=goodeventtitle[state.nowevent];
+        state.noweventmessage=goodeventmessage[state.nowevent];
+        state.isVisible=true;
+    }else{
+        switch(state.nowevent){
+            case 0:
+                jinji_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                kaihatu_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                keiri_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                kenkou_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+            break;
+
+            case 1:
+                state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(Math.floor(kaihatu_state.syain_sum*0.5));
+            break;
+
+            case 2:
+                state.money=state.money*0.5;
+            break;
+
+            case 3:
+                kaihatu_state.kousuu=Math.floor(kaihatu_state.kousuu*1.5)
+            break;
+        }
+        state.noweventtitle=badeventtitle[state.nowevent];
+        state.noweventmessage=badeventmessage[state.nowevent];
+        state.isVisible=true;
+    }
+}
+
 
 //5 emitsで受け取った値をjinjiという変数に入れてなんやかんやする
 const jinji_lvup = (jinji) => {
@@ -192,6 +285,14 @@ const kenkou_addsyain = (kenkou) => {
 const timeclear = () => {
     clearTimeout(timeoutId);
 }
+const open =()=> {
+    state.isVisible=!state.isVisible;
+    console.log(state.isVisible)
+}
+const close=()=>{
+    state.isVisible=!state.isVisible;
+    console.log(state.isVisible)
+}
 </script>
 
 <style scoped>
@@ -219,5 +320,36 @@ p{
 .tate{
     display: flex;
     flex-flow: column;
+}
+
+.modal{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(255,0,0);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,52,1) 100%);
+  width: 600px;
+  height: 400px;
+  border-radius: 20px;
+  border: 5px solid #000000;
+  padding: 20px;
 }
 </style>
