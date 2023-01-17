@@ -8,8 +8,8 @@
         <input type="pass" class="login_pass" v-model="pass">
 
         <p class="error1">ユーザー名が登録されていないか、パスワードが間違っています</p>
-        <button class="logbtn" @click="login">login</button>
-        <a href=""><button class="createbtn">create new</button></a>
+        <button class="logbtn" @click="create">create new</button>
+        <a href=""><button class="createbtn">login</button></a>
     </div>
 </template>
 <script setup>
@@ -17,12 +17,9 @@ import { reactive } from "vue"
 let name=reactive("");
 let pass=reactive("");
 let display=reactive(["none"]);
-const login =()=>{
-        return {
-            user_name:name,
-            user_pass:pass
-        }
-};
+const hyouzi =()=>{
+    user_name:name
+}
 </script>
 <style>
 .img_pc{

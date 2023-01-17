@@ -30,3 +30,14 @@ import Login from './components/login/Login.vue'
 </script>
 <style scoped>
 </style>
+
+<!-- <template>
+  <div>
+    <Gamemain />
+  </div>
+</template>
+<script setup>
+import Gamemain from './components/GameMain.vue'
+</script>
+<style scoped>
+</style> -->
