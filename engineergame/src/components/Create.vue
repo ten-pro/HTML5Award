@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <img src="../components/PNG/pc.png" alt="" class="img_pc">
+        <img src="../components/PNG/login.png" alt="" class="img_pc">
         <div class="mozi1">name</div>
         <input type="text" class="cre_input" v-model="name"><br>
 
@@ -48,12 +48,12 @@ let create_user=()=> {
     border: 2px solid;
     border-color: #000000;
     border-radius: 8px ;
-    margin: 20.0vh 40.0vw;
+    margin: 15.0vh 38.0vw;
     opacity: 0.8;
 }
 .mozi1{
     position: absolute;
-    margin: 21.0vh 25.0vw;
+    margin: 16.5vh 30.0vw;
     font-size: 23px;
 }
 .cre_pass{
@@ -63,25 +63,26 @@ let create_user=()=> {
     border: 2px solid;
     border-color: #000000;
     border-radius: 8px ;
-    margin: 30.0vh 40.0vw;
+    margin: 25.0vh 38.0vw;
     opacity: 0.8;
 
 }
 .mozi2{
     position: absolute;
-    margin: 31.0vh 25.0vw;
+    margin: 26.0vh 30.0vw;
     font-size: 23px;
 }
 .error1{
     display: v-bind(display);
     color: #CB0000;
     position: absolute;
-    width: 260px;
-    margin: 40.0vh 35.0vw;
+    width: 270px;
+    margin: 37.0vh 58.0vw;
+    font-size: 17px;
 }
 .crebtn{
     position: absolute;
-    margin: 40.0vh 42.0vw;
+    margin: 35.0vh 42.0vw;
     width: 223px;
     height: 54px;
     border-radius: 50px;
@@ -95,8 +96,8 @@ let create_user=()=> {
     border-right:none;
     border-left:none;
     border-top:none;
-    border-color: #9C39A1;
-    margin: 50.0vh 45.0vw;
+    border-color: #0d307b;
+    margin: 44.0vh 46.0vw;
     font-size: 25px;
     color: #0d307b;
     background: transparent;
