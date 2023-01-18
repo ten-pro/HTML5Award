@@ -1,14 +1,3 @@
-<template>
-  <div>
-    <Ranking />
-  </div>
-</template>
-<script setup>
-import Ranking from './components/Ranking.vue'
-</script>
-<style scoped>
-</style>
-
 <!-- <template>
   <div>
     <Ranking />
@@ -19,6 +8,17 @@ import Ranking from './components/Ranking.vue'
 </script>
 <style scoped>
 </style> -->
+
+<template>
+  <div>
+    <Login />
+  </div>
+</template>
+<script setup>
+import Login from './components/login/Login.vue'
+</script>
+<style scoped>
+</style>
 
 <!-- <template>
   <div>
