@@ -14,7 +14,8 @@
             </div>
             
             <div class="upright">
-                <div class="score">SCORE&nbsp;&nbsp;&nbsp;</div>
+                <div class="underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="score">{{ score }}&nbsp;</div>
                 <button class="account">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
                         class="bi bi-person-circle account-svg" viewBox="0 0 16 16">
@@ -30,21 +31,48 @@
             <svg width="80px" height="80px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet"><path fill="#DD2E44" d="M36 32a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v28z"></path><path fill="#FFF" d="M14.747 9.125c.527-1.426 1.736-2.573 3.317-2.573c1.643 0 2.792 1.085 3.318 2.573l6.077 16.867c.186.496.248.931.248 1.147c0 1.209-.992 2.046-2.139 2.046c-1.303 0-1.954-.682-2.264-1.611l-.931-2.915h-8.62l-.93 2.884c-.31.961-.961 1.642-2.232 1.642c-1.24 0-2.294-.93-2.294-2.17c0-.496.155-.868.217-1.023l6.233-16.867zm.34 11.256h5.891l-2.883-8.992h-.062l-2.946 8.992z"></path></svg>
         </div>
         <div class="lower">
-            <button class="custom-btn btn-9 startbutton">Start</button>
+            <button class="custom-btn btn-9 startbutton" @click="start">Start</button>
         </div>
     </div>
 </template>
 <script setup>
+import axios from "axios"
     import {
         reactive
     } from "vue"
-    let state = reactive({
+    let score = reactive([
+        {score:""}
+    ])
 
-    })
 
-    const wide = () => {}
+            axios
+                .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                    user_id: 1,
+                    myrank: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (res) {
+                    score = res.data[0].score
+                    console.log(score)
+                })
+                
+    const start = () => {
+        location.href="/gamemain"
+    }
 </script>
+
+
 <style scoped>
+.underline {
+    position: absolute;
+    border-bottom: 5px solid black;
+    font-weight: bold;
+    top: 60%;
+    right: 40%;
+}
 .lower {
 justify-content: center;
 display: flex;
@@ -93,11 +121,14 @@ margin-top: 15%;
 }
 .score {
     font-size: 59px;
-    text-decoration: underline;
+    font-weight: bold;
 position: absolute;
-left: -210px;
+left: -120px;
 bottom: -10px;
 color: rgb(0, 0, 0);
+background: -webkit-linear-gradient(270deg, #943BED, #FF97D5);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 .custom-btn {
     width: 220px;
