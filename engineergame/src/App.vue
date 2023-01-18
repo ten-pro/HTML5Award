@@ -6,6 +6,7 @@
   </div>
 </template>
 <script setup>
+
 import {reactive} from "vue"
 import GameMain from './components/GameMain.vue'
 let result = reactive({
