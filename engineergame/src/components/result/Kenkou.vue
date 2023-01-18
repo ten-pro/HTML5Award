@@ -1,6 +1,6 @@
 <template>
     <div class="kenkou_area">
-        <p class="p9">健康管理部<br>Lv.{{ topstate.kenkou_lev }}</p>
+        <p class="p9">健康管理部<br>Lv.{{ topstate.kenlv }}</p>
     </div>
 </template>
 <script setup>
@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .kenkou_area{
     text-align: center;
     width:18vw;
