@@ -14,7 +14,8 @@
             </div>
             
             <div class="upright">
-                <div class="score">SCORE&nbsp;&nbsp;&nbsp;</div>
+                <div class="underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="score">{{ score }}&nbsp;</div>
                 <button class="account">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
                         class="bi bi-person-circle account-svg" viewBox="0 0 16 16">
@@ -35,18 +36,43 @@
     </div>
 </template>
 <script setup>
+import axios from "axios"
     import {
         reactive
     } from "vue"
-    let state = reactive({
+    let score = reactive([
+        {score:""}
+    ])
 
-    })
 
+            axios
+                .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                    user_id: 1,
+                    myrank: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (res) {
+                    score = res.data[0].score
+                    console.log(score)
+                })
+                
     const start = () => {
         location.href="/gamemain"
     }
 </script>
+
+
 <style scoped>
+.underline {
+    position: absolute;
+    border-bottom: 5px solid black;
+    font-weight: bold;
+    top: 60%;
+    right: 40%;
+}
 .lower {
 justify-content: center;
 display: flex;
@@ -95,11 +121,14 @@ margin-top: 15%;
 }
 .score {
     font-size: 59px;
-    text-decoration: underline;
+    font-weight: bold;
 position: absolute;
-left: -210px;
+left: -120px;
 bottom: -10px;
 color: rgb(0, 0, 0);
+background: -webkit-linear-gradient(270deg, #943BED, #FF97D5);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 .custom-btn {
     width: 220px;
