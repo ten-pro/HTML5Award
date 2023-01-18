@@ -13,7 +13,7 @@
     </div>
 </template>
 <script setup>
-import {reactive} from "vue"
+import {reactive,watch} from "vue"
 import swal from 'sweetalert';
 let state = reactive({
     lv:1,
@@ -49,12 +49,18 @@ const addsyain = () => {
     }
 }
 
-
 const emits = defineEmits([
     //3 jinji_lvupという名前でemitsが呼ばれると発火し、親側に値を送信
     "jinji_lvup",
     "jinji_addsyain"
 ]) 
+
+watch(
+  () => state.syain_sum,
+  (sum, prevSum) => {
+    state.next=Math.floor(0.5*state.syain_sum*(0.9+0.1*state.lv)*100)/100;
+  }
+)
 </script>
 <style scoped>
 p{

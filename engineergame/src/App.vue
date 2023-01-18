@@ -1,10 +1,21 @@
-<!-- <template>
+<template>
   <div>
-    <Home />
+    <Ranking />
   </div>
 </template>
 <script setup>
-import Home from './components/Home.vue'
+import Ranking from './components/Ranking.vue'
+</script>
+<style scoped>
+</style>
+
+<!-- <template>
+  <div>
+    <Ranking />
+  </div>
+</template>
+<script setup>
+import Ranking from './components/Ranking.vue'
 </script>
 <style scoped>
 </style> -->
@@ -20,16 +31,16 @@ import Result from './components/Result.vue'
 <style scoped>
 </style> -->
 
-<template>
+<!-- <template>
   <div>
-    <Login />
+    <Home />
   </div>
 </template>
 <script setup>
-import Login from './components/login/Login.vue'
+import Ranking from './components/Ranking.vue'
 </script>
 <style scoped>
-</style>
+</style> -->
 
 <!-- <template>
   <div>
@@ -41,3 +52,4 @@ import Gamemain from './components/GameMain.vue'
 </script>
 <style scoped>
 </style> -->
+

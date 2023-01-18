@@ -13,18 +13,20 @@
     </div>
 </template>
 <script setup>
-import {reactive} from "vue"
+import {reactive,watch} from "vue"
 import swal from 'sweetalert';
 let state = reactive({
     lv:1,
     syain_sum:0,
     next:0,
     price:100,
+    kousuu:10,
 })
 const props = defineProps({
     topstate: Object,
     keiri_state:Object,
     kenkou_state:Object,
+    kaihatu_state:Object,
 })
 
 const lvup = () => {
@@ -32,7 +34,7 @@ const lvup = () => {
         state.price=100*state.lv - Math.floor(100*state.lv*props.keiri_state.next);
         state.lv++;
         //1人分の10工数×所属社員人数×今の部署レベル
-        state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100
+        state.next=Math.floor(state.kousuu*state.syain_sum*(0.9+0.1*state.lv)*100)/100
 
         //2 kaihatu_lvupという設定している名前とstateの値でemitsを実行
         emits("kaihatu_lvup", state) 
@@ -43,12 +45,26 @@ const lvup = () => {
 const addsyain = () => {
     if(props.topstate.misyain>0){
         state.syain_sum++;
-        state.next=Math.floor(10*state.syain_sum*(0.9+0.1*state.lv)*100)/100
+        state.next=Math.floor(state.kousuu*state.syain_sum*(0.9+0.1*state.lv)*100)/100
         emits("kaihatu_addsyain", state) 
     }else{
         swal("未所属社員が0名です","","error")
     }
 }
+
+//state.syain_sumを監視
+watch(
+  () => state.syain_sum,
+  (sum, prevSum) => {
+    state.next=Math.floor(state.kousuu*state.syain_sum*(0.9+0.1*state.lv)*100)/100;
+  }
+)
+watch(
+  () => state.kousuu,
+  (sum, prevSum) => {
+    state.next=Math.floor(state.kousuu*state.syain_sum*(0.9+0.1*state.lv)*100)/100;
+  }
+)
 
 
 const emits = defineEmits([
