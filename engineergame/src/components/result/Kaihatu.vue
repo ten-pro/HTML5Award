@@ -1,6 +1,6 @@
 <template>
     <div class="kaihatu_area">
-        <p class="p8">開発部<br>Lv.{{ topstate.kaihatu_lev }}</p>
+        <p class="p8">開発部<br>Lv.{{ topstate.kailv }}</p>
     </div>
 </template>
 <script setup>
@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .kaihatu_area{
     text-align: center;
     width:16vw;

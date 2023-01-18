@@ -7,17 +7,17 @@
             <p class="p1">result</p>
         </div>
         <div class="koko">
-            <Shisan :topstate="state"/>
-            <Misyain :topstate="state"/>
-            <Nissu :topstate="state"/>
-            <Ninzu :topstate="state"/>
+            <Shisan :topstate="props.result"/>
+            <Misyain :topstate="props.result"/>
+            <Nissu :topstate="props.result"/>
+            <Ninzu :topstate="props.result"/>
             <Level />
         </div>
         <div class="container">
-            <Jinji :topstate="state"/>
-            <Keiri :topstate="state"/>
-            <Kaihatu :topstate="state"/>
-            <Kenkou :topstate="state"/>
+            <Jinji :topstate="props.result"/>
+            <Keiri :topstate="props.result"/>
+            <Kaihatu :topstate="props.result"/>
+            <Kenkou :topstate="props.result"/>
         </div>
     </div>
     
@@ -44,6 +44,9 @@ let state = reactive({
     keiri_lev:0,
     kaihatu_lev:0,
     kenkou_lev:0
+})
+const props = defineProps({
+    result: Object,
 })
 </script>
 <style scoped>

@@ -43,7 +43,7 @@ const addsyain = () => {
     if(props.topstate.misyain>0){
         state.syain_sum++;
         state.next=Math.floor(0.5*state.syain_sum*(0.9+0.1*state.lv)*100)/100
-        emits("jinji_addsyain", state) 
+        emits("jinji_addsyain", state)
     }else{
         swal("未所属社員が0名です","","error")
     }

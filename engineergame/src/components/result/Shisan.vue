@@ -1,6 +1,6 @@
 <template>
     <div class="shisan_area">
-        <p class="p2">資産:{{topstate.shisan}}万</p>
+        <p class="p2">資産:{{topstate.money}}万</p>
     </div>
 </template>
 <script setup>
@@ -10,7 +10,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .shisan_area{
     width:80vw;
     height: 9vh;
