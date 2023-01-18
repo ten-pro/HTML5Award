@@ -9,7 +9,7 @@
 
         <p class="error1">すでに登録されています。</p>
         <button class="crebtn" @click="create_user">create new</button>
-        <a href=""><button class="logbtn">login</button></a>
+        <button class="logbtn" @click="login">login</button>
     </div>
 </template>
 <script setup>
@@ -34,6 +34,9 @@ let create_user=()=> {
                     location.href="/home"
                 )
         }
+const login=()=>{
+    location.href="/"
+}
 </script>
 <style scoped>
 .img_pc{

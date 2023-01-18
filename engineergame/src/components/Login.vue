@@ -9,7 +9,7 @@
 
         <p class="error1">ユーザー名が登録されていないか、パスワードが間違っています</p>
         <button class="logbtn" @click="loginchk">login</button>
-        <a href=""><button class="createbtn">create new</button></a>
+        <button class="createbtn" @click="create">create new</button>
     </div>
 </template>
 <script setup>
@@ -43,6 +43,9 @@ let loginchk =()=>{
                     }
                 })
 };
+const create=()=>{
+    location.href="create"
+}
 </script>
 <style scoped>
 .img_pc{
