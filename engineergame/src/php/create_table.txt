@@ -22,3 +22,10 @@ CREATE TABLE clear_tbl(
 SELECT T2.user_id,T2.SCMAX FROM (SELECT user_id,MAX(clear_score) AS SCMAX FROM clear_tbl GROUP BY user_id) T2 ORDER BY T2.SCMAX DESC LIMIT 5
 SELECT T2.user_id,T2.MNMAX FROM (SELECT user_id,MAX(clear_money) AS MNMAX FROM clear_tbl GROUP BY user_id) T2 ORDER BY T2.MNMAX DESC LIMIT 5
 SELECT RANK() OVER(ORDER BY clear_score DESC);
+
+
+SET @rownum=0; SELECT T3.num,T3.id,T3.score FROM (SELECT @rownum:=@rownum+1 AS num,T2.user_id AS id,T2.SCMAX AS score FROM (SELECT user_id,MAX(clear_score) AS SCMAX FROM clear_tbl GROUP BY user_id) T2 ORDER BY T2.SCMAX DESC) T3 WHERE T3.id = ?;
+
+SELECT user_id, clear_score, FIND_IN_SET(clear_score, (SELECT GROUP_CONCAT(clear_score ORDER BY clear_score DESC) FROM clear_tbl)) AS rank FROM clear_tbl ORDER BY clear_score DESC;
+
+SELECT user_id, clear_score, FIND_IN_SET(clear_score, (SELECT GROUP_CONCAT(clear_score ORDER BY clear_score DESC) FROM clear_tbl)) AS rank FROM clear_tbl WHERE user_id = 1;

@@ -31,7 +31,7 @@ let loginchk =()=>{
                 })
                 .then(
                     (response) => (loginchk = response.data),
-                    console.log("成功")
+                    location.href="/home"
                 )
 };
 </script>
