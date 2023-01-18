@@ -112,7 +112,7 @@ import axios from "axios"
 .text {
     text-align: center;
     color: #943BED;
-    font-size: 90px;
+    font-size: 80px;
     font-weight: bold;
     letter-spacing: 10px;
 }
