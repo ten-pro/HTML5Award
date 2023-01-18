@@ -48,6 +48,7 @@
 </template>
 <script setup>
 import {reactive} from "vue"
+import axios from "axios"
 import Jinji from './gamemain/Jinji.vue'
 import Kaihatu from './gamemain/Kaihatu.vue'
 import Keiri from './gamemain/Keiri.vue'
@@ -187,34 +188,35 @@ const intervalCallback=()=> {
             }
         }else{
             timeclear();
-            result_state.money=state.money;
-            result_state.misyain=state.misyain;
-            result_state.day=state.nowday;
-            result_state.syain=jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum;
-            result_state.jilv=jinji_state.lv;
-            result_state.keilv=kaihatu_state.lv;
-            result_state.kailv=keiri_state.lv;
-            result_state.kenlv=kenkou_state.lv;
-            emits("result", result_state)
-            swal("ゲームオーバー！","リザルト画面へ","error")
-            .then(()=>{
-                location.href="/Result"
-            });
-            // axios
-            //     .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
-            //         user_id: 1,
-            //         myrank: ''
-            //     }, {
-            //         headers: {
-            //             'Content-Type': 'multipart/form-data'
-            //         }
-            //     })
-            //     .then(function (res) {
-            //         swal("ゲームオーバー！","リザルト画面へ","error")
-            //         .then(()=>{
-            //             location.href="/Result"
-            //         });
-            //     })
+            // emits("result", result_state)
+            localStorage.setItem("money",state.money);
+            localStorage.setItem("misyain",state.misyain);
+            localStorage.setItem("day",state.nowday);
+            localStorage.setItem("syain",jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum);
+            localStorage.setItem("jilv",jinji_state.lv);
+            localStorage.setItem("keilv",kaihatu_state.lv);
+            localStorage.setItem("kailv",keiri_state.lv);
+            localStorage.setItem("kenlv",kenkou_state.lv);
+            localStorage.setItem("score",Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100))
+            axios
+                .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                    user_id: 1,
+                    clear_time: state.nowday,
+                    clear_emplyee: state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum,
+                    clear_money: state.money,
+                    clear_score: Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100),
+                    create_clear_infomation: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (res) {
+                    swal("ゲームオーバー！","リザルト画面へ","error")
+                    .then(()=>{
+                        location.href="/Result"
+                    });
+                })
         }
     }
     if(Math.random() * 1 <= 0.05){
@@ -257,7 +259,6 @@ const eventfunk=()=>{
                 kaihatu_state.kousuu=Math.round(kaihatu_state.kousuu*1.5)
             break;
         }
-        console.log(state.nowevent);
         state.noweventtitle=goodeventtitle[state.nowevent];
         state.noweventmessage=goodeventmessage[state.nowevent];
         state.isVisible=true;
@@ -337,11 +338,9 @@ const timeclear = () => {
 }
 const open =()=> {
     state.isVisible=!state.isVisible;
-    console.log(state.isVisible)
 }
 const close=()=>{
     state.isVisible=!state.isVisible;
-    console.log(state.isVisible)
 }
 const emits = defineEmits([
     "result",

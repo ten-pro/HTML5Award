@@ -1,6 +1,6 @@
 <template>
     <div class="nissu_area">
-        <p class="p4">経営日数:{{ topstate.nissu }}日</p>
+        <p class="p4">経営日数:{{ topstate.day }}日</p>
     </div>
 </template>
 <script setup>
@@ -17,5 +17,10 @@ const props = defineProps({
     padding: 0 5vw;
     background-color: white;
     opacity: 0.8;
+}
+p{
+    margin: 0;
+    text-align:center;
+    padding:15px 0;
 }
 </style>
