@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/Login.vue';
-// import Create from '../components/Create.vue';
+import Create from '../components/Create.vue';
 import GameMain from '../components/GameMain.vue';
 import Home from '../components/Home.vue';
 import Ranking from '../components/Ranking.vue';
@@ -11,10 +11,10 @@ const routes = [
     path: '/',
     component: Login,
   },
-  // {
-  //   path: '/create',
-  //   component: Create,
-  // },
+  {
+    path: '/create',
+    component: Create,
+  },
   {
     path: '/gameMain',
     component: GameMain,
