@@ -2,24 +2,38 @@
     <div class="main">
         <img src="../components/PNG/pc.png" alt="" class="img_pc">
         <div class="mozi1">name</div>
-        <input type="text" class="login_input" v-model="name"><br>
+        <input type="text" class="cre_input" v-model="name"><br>
 
         <div class="mozi2">pass</div>
-        <input type="pass" class="login_pass" v-model="pass">
+        <input type="pass" class="cre_pass" v-model="pass">
 
-        <p class="error1">ユーザー名が登録されていないか、パスワードが間違っています</p>
-        <button class="logbtn" @click="create">create new</button>
-        <a href=""><button class="createbtn">login</button></a>
+        <p class="error1">すでに登録されています。</p>
+        <button class="crebtn" @click="create_user">create new</button>
+        <a href=""><button class="logbtn">login</button></a>
     </div>
 </template>
 <script setup>
+import axios from 'axios'
 import { reactive } from "vue"
 let name=reactive("");
 let pass=reactive("");
 let display=reactive(["none"]);
-const hyouzi =()=>{
-    user_name:name
-}
+let create_user=()=> {
+            axios
+                .post('https://mp-class.chips.jp/engineergame/Loginmain.php', {
+                    user_name: name,
+                    user_pass: pass,
+                    create_user: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(
+                    (response) => (console.log(response.data)),
+                    location.href="/home"
+                )
+        }
 </script>
 <style scoped>
 .img_pc{
@@ -27,7 +41,7 @@ const hyouzi =()=>{
     height: 100%;
     position: absolute;
 }
-.login_input{
+.cre_input{
     position: absolute;
     width: 40vw;
     height: 5vh;
@@ -42,7 +56,7 @@ const hyouzi =()=>{
     margin: 21.0vh 25.0vw;
     font-size: 23px;
 }
-.login_pass{
+.cre_pass{
     position: absolute;
     width: 40vw;
     height: 5vh;
@@ -65,7 +79,7 @@ const hyouzi =()=>{
     width: 260px;
     margin: 40.0vh 35.0vw;
 }
-.logbtn{
+.crebtn{
     position: absolute;
     margin: 40.0vh 42.0vw;
     width: 223px;
@@ -76,7 +90,7 @@ const hyouzi =()=>{
     border: none;
     font-size: 28px;
 }
-.createbtn{
+.logbtn{
     position: absolute;
     border-right:none;
     border-left:none;
