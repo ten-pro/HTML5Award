@@ -5,7 +5,7 @@
 </template>
 <script setup>
 </script>
-<style>
+<style scoped>
 .level_area{
     width:80vw;
     height: 9vh;

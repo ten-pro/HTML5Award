@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .nissu_area{
     width:80vw;
     height: 9vh;

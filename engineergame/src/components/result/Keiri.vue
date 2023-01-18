@@ -1,6 +1,6 @@
 <template>
     <div class="keiri_area">
-        <p class="p7">経理部<br>Lv.{{ topstate.keiri_lev }}</p>
+        <p class="p7">経理部<br>Lv.{{ topstate.keilv }}</p>
     </div>
 </template>
 <script setup>
@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .keiri_area{
     text-align: center;
     width:16vw;
