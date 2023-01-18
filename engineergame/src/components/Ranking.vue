@@ -118,7 +118,7 @@ const home = () => {
     height: 100px;
     color: #fff;
     border-radius: 5px;
-    margin:2% 0 0 5%;
+    margin: 2% 0 0 5%;
     padding: 10px 25px;
     font-family: 'Lato', sans-serif;
     font-weight: 500;
@@ -138,6 +138,8 @@ const home = () => {
     border: none;
     transition: all 0.3s ease;
     overflow: hidden;
+    position: absolute;
+    top: 10%;
   }
   .btn-9:after {
     position: absolute;
