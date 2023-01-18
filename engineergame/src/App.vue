@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Ranking />
+    <Home />
   </div>
 </template>
 <script setup>
-import Ranking from './components/Ranking.vue'
+import Home from './components/Home.vue'
 </script>
 <style scoped>
 </style>
