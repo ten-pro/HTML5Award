@@ -8,32 +8,18 @@
         <input type="pass" class="login_pass" v-model="pass">
 
         <p class="error1">ユーザー名が登録されていないか、パスワードが間違っています</p>
-        <button class="logbtn" @click="loginchk">login</button>
-        <a href=""><button class="createbtn">create new</button></a>
+        <button class="logbtn" @click="create">create new</button>
+        <a href=""><button class="createbtn">login</button></a>
     </div>
 </template>
 <script setup>
-import axios from 'axios'
 import { reactive } from "vue"
 let name=reactive("");
 let pass=reactive("");
 let display=reactive(["none"]);
-let loginchk =()=>{
-            axios
-                .post('https://mp-class.chips.jp/engineergame/Loginmain.php', {
-                    user_name: name,
-                    user_pass: pass,
-                    login_user: ''
-                }, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                .then(
-                    (response) => (loginchk = response.data),
-                    console.log("成功")
-                )
-};
+const hyouzi =()=>{
+    user_name:name
+}
 </script>
 <style>
 .img_pc{

@@ -35,9 +35,14 @@
         <button @click="open">表示</button>
         <teleport to="body">
         <div class="modal" id="sample-modal" v-show="state.isVisible" @click="close"></div>
-        <div class="modal-content" v-show="state.isVisible">
-            <p>{{ state.noweventtitle }}</p>
-            <p>{{ state.noweventmessage }}</p>
+        <div class="modal-content" :class="{ 'good': state.goodcss, 'bad': state.badcss }" v-show="state.isVisible">
+            <img class="updown" v-if="state.eventstate" src="./PNG/up.png">
+            <img class="updown" v-else src="./PNG/down.png">
+            <p class="eventtitle">！イベント発生！</p>
+            <p class="eventtitle">{{ state.noweventtitle }}</p>
+            <p class="eventmessage">{{ state.noweventmessage }}</p>
+            <!-- <p class="updown" v-if="state.eventstate">↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑</p>
+            <p class="updown" v-else >↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓</p> -->
         </div>
         </teleport>
     </div>
@@ -64,6 +69,8 @@ let state = reactive({
     eventstate:false,
     noweventtitle:"",
     noweventmessage:"",
+    goodcss:false,
+    badcss:false
 })
 let jinji_state = reactive({
     lv:1,
@@ -93,7 +100,7 @@ let kenkou_state = reactive({
 })
 //難易度別初期ステ
 let startstates = reactive([
-    {money:100000000,syain:8}
+    {money:1000,syain:8}
 ])
 
 let nouki = reactive([
@@ -172,8 +179,8 @@ const intervalCallback=()=> {
             swal("ゲームオーバー！","リザルト画面へ","error")
         }
     }
-    // if(Math.random() * 1 <= 0.05){
-        state.nowevent = Math.floor(Math.random() * (goodeventtitle.length - 1));
+    if(Math.random() * 1 <= 0.05){
+        state.nowevent = Math.floor(Math.random() * goodeventtitle.length);
         if(Math.random() * 1 <= 0.5){
             //いいイベント
             state.eventstate=true;
@@ -182,7 +189,7 @@ const intervalCallback=()=> {
             state.eventstate=false;
         }
         eventfunk();
-    // }
+    }
 }
 setupfunk();
 //ここまでが読み込み時の設定
@@ -190,48 +197,53 @@ setupfunk();
 const eventfunk=()=>{
     //イベント作成から
     if(state.eventstate==true){
+        state.goodcss=true;
+        state.badcss=false;
         switch(state.nowevent){
             case 0:
-                jinji_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
-                kaihatu_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
-                keiri_state.syain_sum=Math.floor(jinji_state.syain_sum/1.5);
-                kenkou_state.syain_sum=Math.floor(jinji_state.syain_sum/.5);
+                jinji_state.syain_sum=Math.round(jinji_state.syain_sum*1.5);
+                kaihatu_state.syain_sum=Math.round(jinji_state.syain_sum*1.5);
+                keiri_state.syain_sum=Math.round(jinji_state.syain_sum*1.5);
+                kenkou_state.syain_sum=Math.round(jinji_state.syain_sum*1.5);
             break;
 
             case 1:
-                state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(Math.floor(kaihatu_state.syain_sum*1.5));
+                state.nowkousuu=Math.round(state.nowkousuu*1.5);
             break;
 
             case 2:
-                state.money=state.money*1.5;
+                state.money=Math.round(state.money*1.5);
             break;
 
             case 3:
-                kaihatu_state.kousuu=Math.floor(kaihatu_state.kousuu*0.5)
+                kaihatu_state.kousuu=Math.round(kaihatu_state.kousuu*1.5)
             break;
         }
+        console.log(state.nowevent);
         state.noweventtitle=goodeventtitle[state.nowevent];
         state.noweventmessage=goodeventmessage[state.nowevent];
         state.isVisible=true;
     }else{
+        state.goodcss=false;
+        state.badcss=true;
         switch(state.nowevent){
             case 0:
-                jinji_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
-                kaihatu_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
-                keiri_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
-                kenkou_state.syain_sum=Math.floor(jinji_state.syain_sum/0.5);
+                jinji_state.syain_sum=Math.round(jinji_state.syain_sum*0.5);
+                kaihatu_state.syain_sum=Math.round(jinji_state.syain_sum*0.5);
+                keiri_state.syain_sum=Math.round(jinji_state.syain_sum*0.5);
+                kenkou_state.syain_sum=Math.round(jinji_state.syain_sum*0.5);
             break;
 
             case 1:
-                state.nowkousuu+=kaihatu_state.next - kaihatu_state.kousuu*(Math.floor(kaihatu_state.syain_sum*0.5));
+                state.nowkousuu=Math.round(state.nowkousuu*0.5);
             break;
 
             case 2:
-                state.money=state.money*0.5;
+                state.money=Math.round(state.money*0.5);
             break;
 
             case 3:
-                kaihatu_state.kousuu=Math.floor(kaihatu_state.kousuu*1.5)
+                kaihatu_state.kousuu=Math.round(kaihatu_state.kousuu*0.5)
             break;
         }
         state.noweventtitle=badeventtitle[state.nowevent];
@@ -333,6 +345,7 @@ p{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index:1;
 }
 .modal-content{
   position: fixed;
@@ -344,12 +357,42 @@ p{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgb(255,0,0);
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,52,1) 100%);
-  width: 600px;
-  height: 400px;
+  width: 60vw;
+  height: 70vh;
   border-radius: 20px;
   border: 5px solid #000000;
-  padding: 20px;
+  z-index:2;
+}
+.eventtitle{
+    font-size: 3vw;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    text-shadow: none;
+    -webkit-text-stroke: 0.15vw red;
+    text-shadow: 0 0 2vw red;
+    z-index:4;
+}
+.eventmessage{
+    color: white;
+    -webkit-text-stroke: 0.15vw black;
+    font-weight: bold;
+    font-size: 3vw;
+    z-index:4;
+}
+.updown{
+    position:absolute;
+    margin:auto;
+    height: 50vh;
+    opacity: 0.3;
+    z-index:3;
+}
+.good{
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(1,255,0,1) 100%);
+}
+.bad{
+  background: rgb(255,0,0);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,52,1) 100%);
 }
 </style>
