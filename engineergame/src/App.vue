@@ -9,16 +9,16 @@ import Ranking from './components/Ranking.vue'
 <style scoped>
 </style> -->
 
-<template>
+<!-- <template>
   <div>
     <Login />
   </div>
 </template>
 <script setup>
-import Login from './components/login/Login.vue'
+import Login from './components/Login.vue'
 </script>
 <style scoped>
-</style>
+</style> -->
 
 <!-- <template>
   <div>
@@ -52,4 +52,15 @@ import Gamemain from './components/GameMain.vue'
 </script>
 <style scoped>
 </style> -->
+
+<template>
+  <div>
+    <Create />
+  </div>
+</template>
+<script setup>
+import Create from './components/Create.vue'
+</script>
+<style scoped>
+</style>
 

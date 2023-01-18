@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <img src="../PNG/pc.png" alt="" class="img_pc">
+        <img src="../components/PNG/pc.png" alt="" class="img_pc">
         <div class="mozi1">name</div>
         <input type="text" class="login_input" v-model="name"><br>
 
