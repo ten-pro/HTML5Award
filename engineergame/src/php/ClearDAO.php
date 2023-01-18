@@ -83,4 +83,21 @@ class enGameClear
         }
         return $name;
     }
+
+    function myrank($id)
+    {
+        //配列の宣言（無いとエラーが発生した）
+        $data = array();
+
+        $pdo = $this->get_pdo();
+        $sql = "SELECT user_id, clear_score, FIND_IN_SET(clear_score, (SELECT GROUP_CONCAT(clear_score ORDER BY clear_score DESC) FROM clear_tbl)) AS rank FROM clear_tbl WHERE user_id = ?;";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_INT);
+        $ps->execute();
+        $search = $ps->fetchAll();
+        foreach($search as $row){
+            array_push($data, array('rank'=> $row['rank'], 'score' => $row['clear_score']));
+        }
+        return $data;
+    }
 }

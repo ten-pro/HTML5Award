@@ -168,6 +168,9 @@ const intervalCallback=()=> {
             if(state.nowday==365){
                 //クリア時の処理
                 swal("１年間経営クリア！","リザルト画面へ","success")
+                .then(()=>{
+                    location.href="/Result"
+                });
             }else{
                 state.nowanken++;
                 state.nowkousuu=0;
@@ -177,6 +180,9 @@ const intervalCallback=()=> {
         }else{
             timeclear();
             swal("ゲームオーバー！","リザルト画面へ","error")
+            .then(()=>{
+                location.href="/Result"
+            });
         }
     }
     if(Math.random() * 1 <= 0.05){

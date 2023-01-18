@@ -1,10 +1,12 @@
 <template>
     <div class="wrap">
-        <button class="button">戻る</button>
+        <button class="button" @click="returnfunk">戻る</button>
     </div>
 </template>
 <script setup>
-
+const returnfunk =()=>{
+  location.href="/home"
+}
 </script>
 
 <style scoped>
