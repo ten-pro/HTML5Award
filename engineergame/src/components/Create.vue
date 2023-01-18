@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <img src="../PNG/pc.png" alt="" class="img_pc">
+        <img src="../components/PNG/pc.png" alt="" class="img_pc">
         <div class="mozi1">name</div>
         <input type="text" class="login_input" v-model="name"><br>
 
@@ -21,7 +21,7 @@ const hyouzi =()=>{
     user_name:name
 }
 </script>
-<style>
+<style scoped>
 .img_pc{
     width: 100%;
     height: 100%;

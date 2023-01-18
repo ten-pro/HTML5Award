@@ -46,7 +46,7 @@ let state = reactive({
     kenkou_lev:0
 })
 </script>
-<style>
+<style scoped>
 .title_area{
     display: flex;
     justify-content: center;
