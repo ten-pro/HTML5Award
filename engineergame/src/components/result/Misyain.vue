@@ -18,4 +18,9 @@ const props = defineProps({
     background-color: white;
     opacity: 0.8;
 }
+p{
+    margin: 0;
+    text-align:center;
+    padding:15px 0;
+}
 </style>
