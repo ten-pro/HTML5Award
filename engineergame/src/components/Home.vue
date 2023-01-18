@@ -97,13 +97,17 @@ import axios from "axios"
     const logout = () => {
     location.href = "/"
 }
-
 </script>
 
 
 <style scoped>
+.upleft {
+    margin-left: 3%;
+}
 .boss {
     font-weight: bold;
+font-style: oblique;
+font-family: sans-serif;
 font-size: 100px;
 background: linear-gradient(135deg, rgba(255,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(255,0,0,1) 100%);
 -webkit-background-clip: text;
@@ -111,6 +115,7 @@ background: linear-gradient(135deg, rgba(255,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(
 
 }
 .black {
+font-family: serif;
     font-weight: bold;
     font-size: 200px;
     background: linear-gradient(0deg, rgba(0,0,0,1) 25%, rgba(243,253,45,1) 100%);
@@ -130,7 +135,7 @@ display: flex;
 margin-top: 3%;
 }
 .middle {
-    margin-top: 10%;
+    margin-top: 8%;
     display: flex;
     justify-content: center;
 }
@@ -164,8 +169,10 @@ margin-top: 3%;
 .upper {
     display: flex;
     justify-content: space-between;
+    margin-top: 2%;
 }
 .upright {
+    margin-right: 3%;
     display: flex;
     align-items:stretch;
     position: relative;
