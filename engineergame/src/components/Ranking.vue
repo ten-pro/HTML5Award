@@ -119,13 +119,13 @@ import axios from "axios"
 .rankingList {
     display: flex;
 width: 100%;
-margin: 30px 0 0 25%;
+margin: 25px 0 0 25%;
 }
 .rankingNumberBack1 {
-margin: 50px -20px 0 20px ;
+margin: 35px -15px 0 20px ;
 transform: skewX(30deg);
-    width: 80px;
-    height: 50px;
+    width: 70px;
+    height: 45px;
     text-align: center;
     position: relative;
     
@@ -145,8 +145,8 @@ font-family: serif;
 .rankingMainBack1 {
     position: relative;
     transform: skewX(30deg);
-    width: 800px;
-    height: 100px;
+    width: 700px;
+    height: 80px;
 background: linear-gradient(to bottom right,#943BED,#FF97D5);
 }
 .rankingName1 {
