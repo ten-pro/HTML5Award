@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .misyain_area{
     width:80vw;
     height: 9vh;
@@ -17,5 +17,10 @@ const props = defineProps({
     padding: 0 5vw;
     background-color: white;
     opacity: 0.8;
+}
+p{
+    margin: 0;
+    text-align:center;
+    padding:15px 0;
 }
 </style>

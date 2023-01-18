@@ -4,20 +4,20 @@
             <Return />
         </div>
         <div class="title_area">
-            <p class="p1">result</p>
+            <p class="p1">経営結果</p>
         </div>
         <div class="koko">
-            <Shisan :topstate="state"/>
-            <Misyain :topstate="state"/>
-            <Nissu :topstate="state"/>
-            <Ninzu :topstate="state"/>
-            <Level />
+            <Shisan :topstate="result"/>
+            <Misyain :topstate="result"/>
+            <Nissu :topstate="result"/>
+            <Ninzu :topstate="result"/>
+            <Level :topstate="result"/>
         </div>
         <div class="container">
-            <Jinji :topstate="state"/>
-            <Keiri :topstate="state"/>
-            <Kaihatu :topstate="state"/>
-            <Kenkou :topstate="state"/>
+            <Jinji :topstate="result"/>
+            <Keiri :topstate="result"/>
+            <Kaihatu :topstate="result"/>
+            <Kenkou :topstate="result"/>
         </div>
     </div>
     
@@ -34,19 +34,35 @@ import Kenkou from './result/Kenkou.vue'
 import Ninzu from './result/Ninzu.vue'
 import Level from './result/Level.vue'
 import Return from './result/Return.vue'
-
-let state = reactive({
-    shisan:0,
+let result = reactive({
+    money:0,
     misyain:0,
-    nissu:0,
-    ninzu:0,
-    jinji_lev:0,
-    keiri_lev:0,
-    kaihatu_lev:0,
-    kenkou_lev:0
+    day:0,
+    syain:0,
+    jilv:0,
+    keilv:0,
+    kailv:0,
+    kenlv:0,
+    score:0
 })
+const setup=()=>{
+    result.money=localStorage.getItem("money");
+    result.misyain=localStorage.getItem("misyain");
+    result.day=localStorage.getItem("day");
+    result.syain=localStorage.getItem("syain");
+    result.jilv=localStorage.getItem("jilv");
+    result.keilv=localStorage.getItem("keilv");
+    result.kailv=localStorage.getItem("kailv");
+    result.kenlv=localStorage.getItem("kenlv");
+    result.score=localStorage.getItem("score");
+}
+setup();
+
+// const props = defineProps({
+//     result: Object,
+// })
 </script>
-<style>
+<style scoped>
 .title_area{
     display: flex;
     justify-content: center;

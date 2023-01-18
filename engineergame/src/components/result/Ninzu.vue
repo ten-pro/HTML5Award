@@ -1,6 +1,6 @@
 <template>
     <div class="ninzu_area">
-        <p class="p10">所属人数:{{ topstate.ninzu }}人</p>
+        <p class="p10">所属人数:{{ topstate.syain }}人</p>
     </div>
 </template>
 <script setup>
@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .ninzu_area{
     width:80vw;
     height: 9vh;
@@ -17,5 +17,10 @@ const props = defineProps({
     padding: 0 5vw;
     background-color: white;
     opacity: 0.8;
+}
+p{
+    margin: 0;
+    text-align:center;
+    padding:15px 0;
 }
 </style>

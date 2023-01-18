@@ -1,6 +1,6 @@
 <template>
     <div class="jinji_area">
-        <p class="p6">人事部<br>Lv.{{topstate.jinji_lev}}</p>
+        <p class="p6">人事部<br>Lv.{{topstate.jilv}}</p>
     </div>
 </template>
 <script setup>
@@ -9,7 +9,7 @@ const props = defineProps({
     topstate: Object,
 }) 
 </script>
-<style>
+<style scoped>
 .jinji_area{
     text-align: center;
     width:16vw;

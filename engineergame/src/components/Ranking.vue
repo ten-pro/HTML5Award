@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text">RESULT</div>
+        <div class="text">RANKING</div>
         <div class="rankingList">
             <div class="rankingNumberBack1 gold">
                 <div class="rankingNumber1 whiteFore">1</div>

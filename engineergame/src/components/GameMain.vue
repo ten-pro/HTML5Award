@@ -32,7 +32,6 @@
             <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
             <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
         </div>
-        <button @click="open">表示</button>
         <teleport to="body">
         <div class="modal" id="sample-modal" v-show="state.isVisible" @click="close"></div>
         <div class="modal-content" :class="{ 'good': state.goodcss, 'bad': state.badcss }" v-show="state.isVisible">
@@ -49,6 +48,7 @@
 </template>
 <script setup>
 import {reactive} from "vue"
+import axios from "axios"
 import Jinji from './gamemain/Jinji.vue'
 import Kaihatu from './gamemain/Kaihatu.vue'
 import Keiri from './gamemain/Keiri.vue'
@@ -102,7 +102,16 @@ let kenkou_state = reactive({
 let startstates = reactive([
     {money:1000,syain:8}
 ])
-
+let result_state = reactive({
+    money:0,
+    misyain:0,
+    day:0,
+    syain:0,
+    jilv:0,
+    keilv:0,
+    kailv:0,
+    kenlv:0
+})
 let nouki = reactive([
     7,21,49,77,105,140,175,231,287,365
 ])
@@ -179,10 +188,35 @@ const intervalCallback=()=> {
             }
         }else{
             timeclear();
-            swal("ゲームオーバー！","リザルト画面へ","error")
-            .then(()=>{
-                location.href="/Result"
-            });
+            // emits("result", result_state)
+            localStorage.setItem("money",state.money);
+            localStorage.setItem("misyain",state.misyain);
+            localStorage.setItem("day",state.nowday);
+            localStorage.setItem("syain",jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum);
+            localStorage.setItem("jilv",jinji_state.lv);
+            localStorage.setItem("keilv",kaihatu_state.lv);
+            localStorage.setItem("kailv",keiri_state.lv);
+            localStorage.setItem("kenlv",kenkou_state.lv);
+            localStorage.setItem("score",Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100))
+            axios
+                .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                    user_id: 1,
+                    clear_time: state.nowday,
+                    clear_emplyee: state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum,
+                    clear_money: state.money,
+                    clear_score: Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100),
+                    create_clear_infomation: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (res) {
+                    swal("ゲームオーバー！","リザルト画面へ","error")
+                    .then(()=>{
+                        location.href="/Result"
+                    });
+                })
         }
     }
     if(Math.random() * 1 <= 0.05){
@@ -225,7 +259,6 @@ const eventfunk=()=>{
                 kaihatu_state.kousuu=Math.round(kaihatu_state.kousuu*1.5)
             break;
         }
-        console.log(state.nowevent);
         state.noweventtitle=goodeventtitle[state.nowevent];
         state.noweventmessage=goodeventmessage[state.nowevent];
         state.isVisible=true;
@@ -305,12 +338,13 @@ const timeclear = () => {
 }
 const open =()=> {
     state.isVisible=!state.isVisible;
-    console.log(state.isVisible)
 }
 const close=()=>{
     state.isVisible=!state.isVisible;
-    console.log(state.isVisible)
 }
+const emits = defineEmits([
+    "result",
+]) 
 </script>
 
 <style scoped>
