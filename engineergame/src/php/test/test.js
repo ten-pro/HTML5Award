@@ -7,7 +7,7 @@ const app = new Vue({
             user_name: '',
             user_pass: '',
             user_name: '',
-            user_id: '',
+            user_id: 0,
             login: '情報ナシ',
             clear_user_id: 0,
             clear_time: 0,
@@ -15,7 +15,7 @@ const app = new Vue({
             clear_money: 0,
             clear_score: 0,
             ranking: {},
-            chk:false
+            chk: false
         }
     },
     //ページが読み込まれた時に動く処理
@@ -53,8 +53,7 @@ const app = new Vue({
                     }
                 })
                 .then(
-                    (response) => (this.login = response.data),
-                    (response) => (console.log(response.data))
+                    (response) => (this.login = response.data)
                 )
         },
         random() {
@@ -94,8 +93,24 @@ const app = new Vue({
                 .then(
                     // (response) => (console.log(response.data)),
                     (response) => (this.ranking = response.data))
+        },
+        get_myrank() {
+            axios
+                .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                    user_id: this.user_id,
+                    myrank: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(
+                    (response) => (console.log(response.data))
+                )
         }
     },
     computed: {
-    }
+    },
+    watch: {
+    },
 });
