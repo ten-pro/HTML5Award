@@ -127,10 +127,10 @@ background: linear-gradient(135deg, rgba(255,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(
 .lower {
 justify-content: center;
 display: flex;
- /* margin-top: 15%; */
+margin-top: 3%;
 }
 .middle {
-    margin-top: 15%;
+    margin-top: 10%;
     display: flex;
     justify-content: center;
 }
