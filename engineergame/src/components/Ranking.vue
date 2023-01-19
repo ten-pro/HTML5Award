@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main" ref="fullscreen">
         <div class="text">RANKING</div>
         <div class="rankingList">
             <div class="rankingNumberBack1 gold">
@@ -52,15 +52,22 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">MyScore</div>
-                <div class="rankingScore1">{{ score[4].score != null ? score[4].score : "-" }}</div>
+                <div class="rankingScore1">{{ score[5].score != null ? score[5].score : "-" }}</div>
             </div>
         </div>
         <button class="custom-btn btn-9 startbutton" @click="home">←ホームへ</button>
+        <img v-show="state.nowimg==0" src="./PNG/wide.png" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==1" src="./PNG/small.png" @click="wide" class="fullscreen">
     </div>
 </template>
 <script setup>
 import axios from "axios"
-    import { reactive } from "vue"
+import { reactive,ref } from "vue"
+const fullscreen=ref(null)
+let state = reactive({
+    img:"src/components/PNG/wide.png",
+    nowimg:0,
+})
     // let state = reactive({})
     let score = reactive([
         {name:"",score:""},
@@ -68,9 +75,8 @@ import axios from "axios"
         {name:"",score:""},
         {name:"",score:""},
         {name:"",score:""},
-        {rank:"",score:""}
+        {name:"",score:""},
     ])
-    window.onload = function(){
     axios
         .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
             get_score_rank: ''
@@ -79,40 +85,51 @@ import axios from "axios"
                 'Content-Type': 'multipart/form-data'
             }
         })
-        .then(function (res){
-            for(let i=0;i<score.length;i++){
-                score[i]=res.data.score_rank[i];
-            }
-            console.log(res.data)
-
-        })
-
-        axios
-            .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
-                user_id: this.user_id = 0,
-                myrank: ''
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            .then(function (res){
+                for(let i=0;i<score.length-1;i++){
+                    score[i]=res.data.score_rank[i];
                 }
-            })
-            .then(function (res) {
-                // (response) => (console.log(response.data))
                 console.log(res.data)
-                // myScore = response.data
-            }
-        )
-
-    }
+                axios
+                .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                    user_id: sessionStorage.getItem("id"),
+                    myrank: ''
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (res) {
+                    console.log(score)
+                    try{
+                        score[5].score=res.data[0].score
+                    }catch(error){
+                        score[5].score=0;
+                    }
+                }
+            )
+        })
 const home = () => {
     location.href = "/home"
 }
-
+const wide=()=>{
+    if(state.nowimg==0){
+        state.nowimg=1;
+        fullscreen.value.requestFullscreen()
+    }else{
+        state.nowimg=0;
+        document.exitFullscreen()
+    }
+}
 
 
 
 </script>
 <style scoped>
+.main{
+    background-image: url("./PNG/background.png");
+    background-size: 100vw 100vh;
+}
 .custom-btn {
     width: 300px;
     height: 100px;
@@ -132,6 +149,7 @@ const home = () => {
     7px 7px 20px 0px rgba(0,0,0,.1),
     4px 4px 5px 0px rgba(0,0,0,.1);
     outline: none;
+    background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 85%)
   }
   
   .btn-9 {
@@ -192,7 +210,7 @@ font-family: serif;
 .rankingMainBack1 {
     position: relative;
     transform: skewX(30deg);
-    width: 700px;
+    width: 800px;
     height: 80px;
 background: linear-gradient(to bottom right,#943BED,#FF97D5);
 }
@@ -231,5 +249,11 @@ font-weight: bold;
 }
 .whiteFore {
     color: white;
+}
+.fullscreen{
+    position: absolute;
+    right:1vw;
+    bottom:1vh;
+    width:4vw;
 }
 </style>

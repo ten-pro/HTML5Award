@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main" ref="fullscreen">
         <div class="upper">
             <div class="upleft">
                 <button class="logout-button" @click="logout">
@@ -62,13 +62,18 @@ fill="#833e3e" stroke="none">
         <div class="lower">
             <button class="custom-btn btn-9 startbutton" @click="start">Start</button>
         </div>
+        <img v-show="state.nowimg==0" src="./PNG/wide.png" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==1" src="./PNG/small.png" @click="wide" class="fullscreen">
     </div>
 </template>
 <script setup>
 import axios from "axios"
-    import {
-        reactive
-    } from "vue"
+import {reactive,ref} from "vue"
+const fullscreen=ref(null)
+let state = reactive({
+    img:"src/components/PNG/wide.png",
+    nowimg:0,
+})
     let score = reactive({
         score:""
     })
@@ -76,7 +81,7 @@ import axios from "axios"
 
             axios
                 .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
-                    user_id: 1,
+                    user_id: sessionStorage.getItem("id"),
                     myrank: ''
                 }, {
                     headers: {
@@ -84,7 +89,11 @@ import axios from "axios"
                     }
                 })
                 .then(function (res) {
-                    score.score = res.data[0].score
+                    try{
+                        score.score = res.data[0].score
+                    }catch(error){
+                        score.score = 0;
+                    }
                     console.log(score)
                 })
                 
@@ -97,12 +106,22 @@ import axios from "axios"
     const logout = () => {
     location.href = "/"
 }
+const wide=()=>{
+    if(state.nowimg==0){
+        state.nowimg=1;
+        fullscreen.value.requestFullscreen()
+    }else{
+        state.nowimg=0;
+        document.exitFullscreen()
+    }
+}
 </script>
 
 
 <style scoped>
-.upleft {
-    margin-left: 3%;
+.main{
+    background-image: url("./PNG/background.png");
+    background-size: 100vw 100vh;
 }
 .boss {
     font-weight: bold;
@@ -207,6 +226,7 @@ margin-top: 3%;
      7px 7px 20px 0px rgba(0,0,0,.1),
      4px 4px 5px 0px rgba(0,0,0,.1);
     outline: none;
+    background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 85%)
   }
   
   .btn-9 {
@@ -228,5 +248,11 @@ margin-top: 3%;
   }
 .btn-9:hover {
     background-image: linear-gradient(315deg, #b621fe 0%, #1fd1f9 85%);
+}
+.fullscreen{
+    position: absolute;
+    right:1vw;
+    bottom:1vh;
+    width:4vw;
 }
 </style>

@@ -9,7 +9,7 @@
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
         <p class="price">-{{ state.price - Math.floor(state.price*state.next) }}万円</p>
         <p class="detail1">レベルアップの価格が{{ Math.floor(state.next*1000)/10 }}％減少(max50%)</p>
-        <p class="detail2">案件成功時の報酬が{{ Math.floor(state.next*1000)/10 }}％増加</p>
+        <p class="detail2">案件成功時の報酬が{{ Math.floor(state.next*1000) }}％増加(max500%)</p>
     </div>
 </template>
 <script setup>
@@ -27,27 +27,41 @@ const props = defineProps({
 })
 
 const lvup = () => {
-    if(props.topstate.money>=100*state.lv){
-        state.price=100*state.lv;
-        state.lv++;
-        if(Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000>=0.5){
-            state.next=0.5;
-        }else{
-            state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
-        }
-        //2 keiri_lvupという設定している名前とstateの値でemitsを実行
-        emits("keiri_lvup", state) 
+    if(staate.next>=0.5){
+        swal("これ以上レベルを上げられません","","error")
     }else{
-        swal("資産が足りません","","error")
+        if(props.topstate.money>=100*state.lv){
+            state.price=100*state.lv;
+            state.lv++;
+            if(Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000>=0.5){
+                state.next=0.5;
+            }else{
+                state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
+            }
+            //2 keiri_lvupという設定している名前とstateの値でemitsを実行
+            emits("keiri_lvup", state) 
+        }else{
+            swal("資産が足りません","","error")
+        }
     }
 }
 const addsyain = () => {
-    if(props.topstate.misyain>0){
-        state.syain_sum++;
-        state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
-        emits("keiri_addsyain", state) 
+    if(state.next>=0.5){
+        swal("これ以上所属できません。","","error")
     }else{
-        swal("未所属社員が0名です","","error")
+        if(props.topstate.misyain>0){
+            state.syain_sum++;
+            if(Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000>=0.5){
+                state.next=0.5;
+                console.log(true)
+            }else{
+                state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
+                console.log(false)
+            }
+            emits("keiri_addsyain", state) 
+        }else{
+            swal("未所属社員が0名です","","error")
+        }
     }
 }
 
@@ -61,7 +75,11 @@ const emits = defineEmits([
 watch(
   () => state.syain_sum,
   (sum, prevSum) => {
-    state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000;
+    if(Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000>=0.5){
+        state.next=0.5;
+    }else{
+        state.next=Math.floor((0.02*state.syain_sum+0.005*(state.lv-1))*10000)/10000
+    }
   }
 )
 </script>
