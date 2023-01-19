@@ -188,7 +188,6 @@ margin-top: 3%;
 .upper {
     display: flex;
     justify-content: space-between;
-    margin-top: 2%;
 }
 .upright {
     margin-right: 3%;
