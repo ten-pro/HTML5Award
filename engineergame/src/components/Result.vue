@@ -71,11 +71,13 @@ setup();
     margin: 2.5vh auto;
     padding: 0 5vw;
     background-color: white;
-    opacity: 0.8;
+    border-radius: 20px;
+    border: solid ;
 }
 .p1{
     margin:auto;
-    font-size:30px;
+    font-size:50px;
+    font-weight: bold;
     text-align:center;
     padding:10px 0;
 }

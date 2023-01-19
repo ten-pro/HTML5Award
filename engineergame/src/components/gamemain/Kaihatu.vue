@@ -4,8 +4,8 @@
         <p class="busyo_name">開発部</p>
 
         <!-- 1 @clickでlvupファンクションを実行 -->
-        <button class="button" @click="lvup">↑</button>
-        <button class="button" @click="addsyain">＋</button>
+        <button class="button flex_column" @click="lvup"><p class="top_moji">LV</p><p class="bottom_moji">UP</p></button>
+        <button class="button" @click="addsyain"><img class="img_syain" src="../PNG/syain.png"><p class="plus">＋</p></button>
         <p class="syain_sum">所属：{{ state.syain_sum }}人</p>
         <p class="price">-{{ state.price - Math.floor(state.price*props.keiri_state.next) }}万円</p>
         <p class="detail1">１週間ごとに{{ state.next }}工数ずつ進む</p>
@@ -94,6 +94,7 @@ p{
     grid-template-columns: 25% 50% 12.5% 12.5%;
 }
 .button{
+    position: relative;
     width:3vw;
     height:3vw;
     font-size:1.5vw;
@@ -101,6 +102,10 @@ p{
     border-radius: 20%;
     color:#ffffff;
     background-color: #00abc5;
+}
+.flex_column{
+    display: flex;
+    flex-direction: column;
 }
 .syain_sum{
     grid-row: 2/3;
@@ -122,5 +127,21 @@ p{
     grid-row:4/5;
     grid-column: 1/5;
     margin-top:0px;
+}
+.img_syain{
+    width: 70%;
+    margin: 0.7vw auto;
+}
+.plus{
+    position: absolute;
+    top:-0.5vw;
+    left:1.3vw;
+    font-size: 1.5vw;
+}
+.top_moji{
+    font-size: 1.2vw;
+}
+.bottom_moji{
+    font-size: 1.2vw;
 }
 </style>
