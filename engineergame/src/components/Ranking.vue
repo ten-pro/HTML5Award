@@ -7,7 +7,7 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">{{ score[0].name != null ? score[0].name : "noName" }}</div>
-                <div class="rankingScore1">{{ score[0].employee != null ? score[0].employee : "-" }}</div>
+                <div class="rankingScore1">{{ score[0].score != null ? score[0].score : "-" }}</div>
             </div>
         </div>
         <div class="rankingList">
@@ -16,7 +16,7 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">{{ score[1].name != null ? score[1].name : "noName" }}</div>
-                <div class="rankingScore1">{{ score[1].employee != null ? score[1].employee : "-" }}</div>
+                <div class="rankingScore1">{{ score[1].score != null ? score[1].score : "-" }}</div>
             </div>
         </div>
         <div class="rankingList">
@@ -25,7 +25,7 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">{{ score[2].name != null ? score[2].name : "noName" }}</div>
-                <div class="rankingScore1">{{ score[2].employee != null ? score[2].employee : "-" }}</div>
+                <div class="rankingScore1">{{ score[2].score != null ? score[2].score : "-" }}</div>
             </div>
         </div>
         <div class="rankingList">
@@ -34,7 +34,7 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">{{ score[3].name != null ? score[3].name : "noName" }}</div>
-                <div class="rankingScore1">{{ score[3].employee != null ? score[3].employee : "-" }}</div>
+                <div class="rankingScore1">{{ score[3].score != null ? score[3].score : "-" }}</div>
             </div>
         </div>
         <div class="rankingList">
@@ -43,7 +43,7 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">{{ score[4].name != null ? score[4].name : "noName" }}</div>
-                <div class="rankingScore1">{{ score[4].employee != null ? score[4].employee : "-" }}</div>
+                <div class="rankingScore1">{{ score[4].score != null ? score[4].score : "-" }}</div>
             </div>
         </div>
         <div class="rankingList">
@@ -52,7 +52,7 @@
             </div>
             <div class="rankingMainBack1">
                 <div class="rankingName1">MyScore</div>
-                <div class="rankingScore1">{{ score[4].employee != null ? score[4].employee : "-" }}</div>
+                <div class="rankingScore1">{{ score[4].score != null ? score[4].score : "-" }}</div>
             </div>
         </div>
         <button class="custom-btn btn-9 startbutton" @click="home">←ホームへ</button>
@@ -63,11 +63,11 @@ import axios from "axios"
     import { reactive } from "vue"
     // let state = reactive({})
     let score = reactive([
-        {name:"",employee:""},
-        {name:"",employee:""},
-        {name:"",employee:""},
-        {name:"",employee:""},
-        {name:"",employee:""},
+        {name:"",score:""},
+        {name:"",score:""},
+        {name:"",score:""},
+        {name:"",score:""},
+        {name:"",score:""},
         {rank:"",score:""}
     ])
     window.onload = function(){
@@ -81,9 +81,9 @@ import axios from "axios"
         })
         .then(function (res){
             for(let i=0;i<score.length;i++){
-                score[i]=res.data.employee_rank[i];
+                score[i]=res.data.score_rank[i];
             }
-            // console.log(score[0].name)
+            console.log(res.data)
 
         })
 
@@ -165,7 +165,7 @@ const home = () => {
 }
 .rankingList {
     display: flex;
-width: 100%;
+width: 100vh;
 margin: 25px 0 0 25%;
 }
 .rankingNumberBack1 {

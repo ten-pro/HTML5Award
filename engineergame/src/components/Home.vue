@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div class="upright">
-                <div class="underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 <div class="score">{{ score.score }}&nbsp;</div>
                 <button class="account">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
@@ -180,13 +180,14 @@ margin-top: 3%;
 .score {
     font-size: 59px;
     font-weight: bold;
-position: absolute;
-left: -120px;
-bottom: -10px;
-color: rgb(0, 0, 0);
-background: -webkit-linear-gradient(270deg, #943BED, #FF97D5);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+    position: absolute;
+    /* left: -120px; */
+    right:5vw;
+    bottom: -10px;
+    color: rgb(0, 0, 0);
+    background: -webkit-linear-gradient(270deg, #943BED, #FF97D5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .custom-btn {
     width: 220px;
