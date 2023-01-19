@@ -71,6 +71,8 @@ setup();
     margin: 2.5vh auto;
     padding: 0 5vw;
     background-color: white;
+    border-radius: 20px;
+    border: solid ;
 }
 .p1{
     margin:auto;

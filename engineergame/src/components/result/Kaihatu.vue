@@ -17,6 +17,7 @@ const props = defineProps({
     margin: 0 3vw;
     padding: 0;
     background-color: white;
-    opacity: 0.8;
+    border-radius: 20px;
+    border: solid ;
 }
 </style>
