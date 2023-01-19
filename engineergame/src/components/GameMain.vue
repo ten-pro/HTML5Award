@@ -235,7 +235,6 @@ setupfunk();
 //ここまでが読み込み時の設定
 
 const eventfunk=()=>{
-    //イベント作成から
     if(state.eventstate==true){
         state.goodcss=true;
         state.badcss=false;
