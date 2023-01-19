@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div class="main" ref="fullscreen">
         <div class="botan">
             <Return />
         </div>
@@ -19,11 +19,12 @@
             <Kaihatu :topstate="result"/>
             <Kenkou :topstate="result"/>
         </div>
+        <img :src="state.img" @click="wide" class="fullscreen">
     </div>
     
 </template>
 <script setup>
-import {reactive} from "vue"
+import {reactive,ref} from "vue"
 import Shisan from './result/Shisan.vue'
 import Misyain from './result/Misyain.vue'
 import Nissu from './result/Nissu.vue'
@@ -34,6 +35,11 @@ import Kenkou from './result/Kenkou.vue'
 import Ninzu from './result/Ninzu.vue'
 import Level from './result/Level.vue'
 import Return from './result/Return.vue'
+const fullscreen=ref(null)
+let state = reactive({
+    img:"src/components/PNG/wide.png",
+    nowimg:0,
+})
 let result = reactive({
     money:0,
     misyain:0,
@@ -57,12 +63,24 @@ const setup=()=>{
     result.score=localStorage.getItem("score");
 }
 setup();
-
+const wide=()=>{
+    if(state.nowimg==0){
+        state.nowimg=1;
+        fullscreen.value.requestFullscreen()
+    }else{
+        state.nowimg=0;
+        document.exitFullscreen()
+    }
+}
 // const props = defineProps({
 //     result: Object,
 // })
 </script>
 <style scoped>
+.main{
+    background-image: url("./PNG/background.png");
+    background-size: 100vw 100vh;
+}
 .title_area{
     display: flex;
     justify-content: center;
@@ -93,6 +111,11 @@ setup();
     position:absolute;
     margin:1.5vw 2.3vw;
 }
-
+.fullscreen{
+    position: absolute;
+    right:1vw;
+    bottom:1vh;
+    width:4vw;
+}
 
 </style>

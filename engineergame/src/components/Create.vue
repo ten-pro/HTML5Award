@@ -41,7 +41,7 @@ fill="#833e3e" stroke="none">
             </div>
             <div class="flex">
         <div class="mozi2">pass</div>
-        <input type="pass" class="cre_pass" v-model="pass">
+        <input type="password" class="cre_pass" v-model="pass">
     </div>
 
         <p class="error1">すでに登録されています。</p>
@@ -52,6 +52,7 @@ fill="#833e3e" stroke="none">
 </template>
 <script setup>
 import axios from 'axios'
+import swal from "sweetalert"
 import { reactive } from "vue"
 let name=reactive("");
 let pass=reactive("");
@@ -67,10 +68,12 @@ let create_user=()=> {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
-                .then(
-                    (response) => (console.log(response.data)),
-                    location.href="/home"
-                )
+                .then(function (res) {
+                    swal("アカウント作成成功！","アカウントを作成しました！ログイン画面からログインしてください","success")
+                    .then(function (res) {
+                        location.href="/"
+                    })
+                })
         }
 const login=()=>{
     location.href="/"

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main" ref="fullscreen">
         <div class="upper">
             <div class="upleft">
                 <button class="logout-button" @click="logout">
@@ -62,13 +62,17 @@ fill="#833e3e" stroke="none">
         <div class="lower">
             <button class="custom-btn btn-9 startbutton" @click="start">Start</button>
         </div>
+        <img :src="state.img" @click="wide" class="fullscreen">
     </div>
 </template>
 <script setup>
 import axios from "axios"
-    import {
-        reactive
-    } from "vue"
+import {reactive,ref} from "vue"
+const fullscreen=ref(null)
+let state = reactive({
+    img:"src/components/PNG/wide.png",
+    nowimg:0,
+})
     let score = reactive({
         score:""
     })
@@ -76,7 +80,7 @@ import axios from "axios"
 
             axios
                 .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
-                    user_id: 1,
+                    user_id: sessionStorage.getItem("id"),
                     myrank: ''
                 }, {
                     headers: {
@@ -84,7 +88,11 @@ import axios from "axios"
                     }
                 })
                 .then(function (res) {
-                    score.score = res.data[0].score
+                    try{
+                        score.score = res.data[0].score
+                    }catch(error){
+                        score.score = 0;
+                    }
                     console.log(score)
                 })
                 
@@ -97,11 +105,23 @@ import axios from "axios"
     const logout = () => {
     location.href = "/"
 }
-
+const wide=()=>{
+    if(state.nowimg==0){
+        state.nowimg=1;
+        fullscreen.value.requestFullscreen()
+    }else{
+        state.nowimg=0;
+        document.exitFullscreen()
+    }
+}
 </script>
 
 
 <style scoped>
+.main{
+    background-image: url("./PNG/background.png");
+    background-size: 100vw 100vh;
+}
 .boss {
     font-weight: bold;
 font-size: 100px;
@@ -221,5 +241,11 @@ display: flex;
   }
 .btn-9:hover {
     background-image: linear-gradient(315deg, #b621fe 0%, #1fd1f9 85%);
+}
+.fullscreen{
+    position: absolute;
+    right:1vw;
+    bottom:1vh;
+    width:4vw;
 }
 </style>

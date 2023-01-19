@@ -41,7 +41,7 @@ fill="#833e3e" stroke="none">
             </div>
             <div class="flex">
                 <div class="mozi2">pass</div>
-                <input type="pass" class="login_pass" v-model="pass">
+                <input type="password" class="login_pass" v-model="pass">
             </div>
             <p class="error1">ユーザー名が登録されていないか、パスワードが間違っています</p>
             <button class="logbtn" @click="loginchk">login</button>

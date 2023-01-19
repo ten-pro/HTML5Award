@@ -1,6 +1,6 @@
 
 <template>
-    <div>
+    <div ref="fullscreen" class="gamemain">
         <div class="states">
             <div class="tate">
                 <p>資産</p>
@@ -32,6 +32,7 @@
             <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
             <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
         </div>
+        <img :src="state.img" @click="wide" class="fullscreen">
         <teleport to="body">
         <div class="modal" id="sample-modal" v-show="state.isVisible" @click="close"></div>
         <div class="modal-content" :class="{ 'good': state.goodcss, 'bad': state.badcss }" v-show="state.isVisible">
@@ -47,7 +48,7 @@
     </div>
 </template>
 <script setup>
-import {reactive} from "vue"
+import {reactive,ref} from "vue"
 import axios from "axios"
 import Jinji from './gamemain/Jinji.vue'
 import Kaihatu from './gamemain/Kaihatu.vue'
@@ -56,6 +57,7 @@ import Kenkou from './gamemain/Kenkou.vue'
 let timeoutId;
 let bakkure=0;
 let byouki=0;
+const fullscreen=ref(null)
 let state = reactive({
     money:0,
     misyain:0,
@@ -70,7 +72,9 @@ let state = reactive({
     noweventtitle:"",
     noweventmessage:"",
     goodcss:false,
-    badcss:false
+    badcss:false,
+    img:"src/components/PNG/wide.png",
+    nowimg:0,
 })
 let jinji_state = reactive({
     lv:1,
@@ -131,10 +135,7 @@ let goodeventtitle = reactive([
     "会社評価急上昇","社員心機一転","大円高","最新機種導入"
 ])
 let goodeventmessage = reactive([
-    "全部署の所属社員が、５割り増える","開発部の工数が、５割り増し","収入が大幅に増え、資産が１．５倍になる","機材トラブルが起こり、工数進捗5割り増し(永続)"
-])
-let eventvalue = reactive([
-    0.5,0.5,0.5,0.5
+    "全部署の所属社員が、５割り増える","開発部の工数が、５割り増し","収入が大幅に増え、資産が１．５倍になる","最新設備になり、工数進捗5割り増し(永続)"
 ])
 const setupfunk = () => {
     state.money=startstates[0].money;
@@ -200,7 +201,7 @@ const intervalCallback=()=> {
             localStorage.setItem("score",Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100))
             axios
                 .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
-                    user_id: 1,
+                    user_id: sessionStorage.getItem("id"),
                     clear_time: state.nowday,
                     clear_emplyee: state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum,
                     clear_money: state.money,
@@ -212,6 +213,7 @@ const intervalCallback=()=> {
                     }
                 })
                 .then(function (res) {
+                    console.log(res)
                     swal("ゲームオーバー！","リザルト画面へ","error")
                     .then(()=>{
                         location.href="/Result"
@@ -335,11 +337,17 @@ const kenkou_addsyain = (kenkou) => {
 const timeclear = () => {
     clearTimeout(timeoutId);
 }
-const open =()=> {
-    state.isVisible=!state.isVisible;
-}
 const close=()=>{
     state.isVisible=!state.isVisible;
+}
+const wide=()=>{
+    if(state.nowimg==0){
+        state.nowimg=1;
+        fullscreen.value.requestFullscreen()
+    }else{
+        state.nowimg=0;
+        document.exitFullscreen()
+    }
 }
 const emits = defineEmits([
     "result",
@@ -347,6 +355,10 @@ const emits = defineEmits([
 </script>
 
 <style scoped>
+.gamemain{
+    background-image: url("./PNG/background.png");
+    background-size: 100vw 100vh;
+}
 .states{
     display: flex;
     justify-content: center;
@@ -433,5 +445,11 @@ p{
 .bad{
   background: rgb(255,0,0);
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,0,52,1) 100%);
+}
+.fullscreen{
+    position: absolute;
+    right:1vw;
+    bottom:1vh;
+    width:4vw;
 }
 </style>
