@@ -20,7 +20,24 @@
                 <p>残り{{ state.nouki }}日</p>
             </div>
             <div class="tate">
-                <p>{{ state.nowday }}日目</p>
+                <p class="margin_auto">{{ state.nowday }}日目</p>
+            </div>
+            <div class="remote_controller">
+                <div class="tate">
+                    <img src="./PNG/stop.png" class="remote_img" @click="timeclear">
+                    <div class="rerative">
+                        <img src="./PNG/fast.png" class="remote_img" @click="remote_three">
+                        <p class="remote_naka" @click="remote_three">3</p>
+                    </div>
+                    <div class="rerative">
+                        <img src="./PNG/fast.png" class="remote_img" @click="remote_five">
+                        <p class="remote_naka" @click="remote_five">5</p>
+                    </div>
+                </div>
+                <div class="tate">
+                    <p class="remote_moji">状態</p>
+                    <p class="remote_moji">{{state.nowstate}}</p>
+                </div>
             </div>
         </div>
         <div class="busyo">
@@ -32,7 +49,8 @@
             <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
             <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
         </div>
-        <img :src="state.img" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==0" src="./PNG/wide.png" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==1" src="./PNG/small.png" @click="wide" class="fullscreen">
         <teleport to="body">
         <div class="modal" id="sample-modal" v-show="state.isVisible" @click="close"></div>
         <div class="modal-content" :class="{ 'good': state.goodcss, 'bad': state.badcss }" v-show="state.isVisible">
@@ -73,8 +91,11 @@ let state = reactive({
     noweventmessage:"",
     goodcss:false,
     badcss:false,
-    img:"src/components/PNG/wide.png",
+    img:"./PNG/wide.png",
     nowimg:0,
+    nowsec:5,
+    startstop:true,
+    nowstate:"5秒",
 })
 let jinji_state = reactive({
     lv:1,
@@ -142,12 +163,12 @@ const setupfunk = () => {
     state.misyain=startstates[0].syain;
     state.maxkousuu=kousuu[state.nowanken];
     state.nouki=nouki[state.nowanken]-state.nowday;
-    setTimeout(intervalCallback, 5 * 1000);
+    timeoutId=setTimeout(intervalCallback, state.nowsec * 1000);
 }
 const intervalCallback=()=> {
     state.nowday++;
     state.nouki--;
-    timeoutId = setTimeout(intervalCallback, 5 * 1000);
+    timeoutId = setTimeout(intervalCallback, state.nowsec * 1000);
     if(state.nowday%7==0 && state.nowday!=0){
         let addnin=0.5*jinji_state.syain_sum*(0.9+0.1*jinji_state.lv)
         let random=0;
@@ -177,10 +198,36 @@ const intervalCallback=()=> {
             state.money+=housyuu[state.nowanken]+Math.floor(housyuu[state.nowanken]*keiri_state.next);
             if(state.nowday==365){
                 //クリア時の処理
-                swal("１年間経営クリア！","リザルト画面へ","success")
-                .then(()=>{
-                    location.href="/Result"
-                });
+                timeclear();
+                // emits("result", result_state)
+                localStorage.setItem("money",state.money);
+                localStorage.setItem("misyain",state.misyain);
+                localStorage.setItem("day",state.nowday);
+                localStorage.setItem("syain",jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum);
+                localStorage.setItem("jilv",jinji_state.lv);
+                localStorage.setItem("keilv",kaihatu_state.lv);
+                localStorage.setItem("kailv",keiri_state.lv);
+                localStorage.setItem("kenlv",kenkou_state.lv);
+                localStorage.setItem("score",Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100))
+                axios
+                    .post('https://mp-class.chips.jp/engineergame/Clearmain.php', {
+                        user_id: sessionStorage.getItem("id"),
+                        clear_time: state.nowday,
+                        clear_emplyee: state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum,
+                        clear_money: state.money,
+                        clear_score: Math.floor(state.money+(state.misyain+jinji_state.syain_sum+kaihatu_state.syain_sum+keiri_state.syain_sum+kenkou_state.syain_sum)*10+state.nowday*100),
+                        create_clear_infomation: ''
+                    }, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(function (res) {
+                        swal("１年間経営クリア！","リザルト画面へ","success")
+                        .then(()=>{
+                            location.href="/Result"
+                        });
+                    })
             }else{
                 state.nowanken++;
                 state.nowkousuu=0;
@@ -335,7 +382,25 @@ const kenkou_addsyain = (kenkou) => {
 }
 
 const timeclear = () => {
+    state.nowstate="停止";
     clearTimeout(timeoutId);
+    state.startstop=false;
+}
+const remote_three=()=>{
+    state.nowstate="3秒"
+    state.nowsec=3;
+    if(state.startstop==false){
+        timeoutId=setTimeout(intervalCallback, state.nowsec * 1000);
+        state.startstop=true;
+    }
+}
+const remote_five=()=>{
+    state.nowstate="5秒"
+    state.nowsec=5;
+    if(state.startstop==false){
+        timeoutId=setTimeout(intervalCallback, state.nowsec * 1000);
+        state.startstop=true;
+    }
 }
 const close=()=>{
     state.isVisible=!state.isVisible;
@@ -371,8 +436,12 @@ const emits = defineEmits([
     gap:4vw;
 }
 p{
-    margin:auto;
-    font-size:4.5vmin;
+    margin:0px;
+    /* font-size:4.5vmin; */
+    font-size: 2.5vw;
+}
+.margin_auto{
+    margin: auto;
 }
 .busyo{
     display: flex;
@@ -383,6 +452,32 @@ p{
 .tate{
     display: flex;
     flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.remote_controller{
+    display: flex;
+    gap:1vw;
+}
+.remote_img{
+    width:2vw;
+    cursor:pointer;
+}
+.remote_moji{
+    font-size: 1.5vw;
+}
+.rerative{
+    position: relative;
+    height:2vw;
+}
+.remote_naka{
+    position:absolute;
+    top:0.4vw;
+    left:0.7vw;
+    color:white;
+    font-size: 0.8vw;
+    cursor:pointer;
 }
 
 .modal{

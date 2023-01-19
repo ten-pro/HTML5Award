@@ -62,7 +62,8 @@ fill="#833e3e" stroke="none">
         <div class="lower">
             <button class="custom-btn btn-9 startbutton" @click="start">Start</button>
         </div>
-        <img :src="state.img" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==0" src="./PNG/wide.png" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==1" src="./PNG/small.png" @click="wide" class="fullscreen">
     </div>
 </template>
 <script setup>
@@ -220,6 +221,7 @@ display: flex;
      7px 7px 20px 0px rgba(0,0,0,.1),
      4px 4px 5px 0px rgba(0,0,0,.1);
     outline: none;
+    background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 85%)
   }
   
   .btn-9 {

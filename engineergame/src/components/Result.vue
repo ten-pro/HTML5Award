@@ -19,7 +19,8 @@
             <Kaihatu :topstate="result"/>
             <Kenkou :topstate="result"/>
         </div>
-        <img :src="state.img" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==0" src="./PNG/wide.png" @click="wide" class="fullscreen">
+        <img v-show="state.nowimg==1" src="./PNG/small.png" @click="wide" class="fullscreen">
     </div>
     
 </template>
