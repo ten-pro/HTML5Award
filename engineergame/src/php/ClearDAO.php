@@ -90,7 +90,7 @@ class enGameClear
         $data = array();
 
         $pdo = $this->get_pdo();
-        $sql = "SELECT user_id, clear_score, FIND_IN_SET(clear_score, (SELECT GROUP_CONCAT(clear_score ORDER BY clear_score DESC) FROM clear_tbl)) AS rank FROM clear_tbl WHERE user_id = ?;";
+        $sql = "SELECT user_id, clear_score, FIND_IN_SET(clear_score, (SELECT GROUP_CONCAT(clear_score ORDER BY clear_score DESC) FROM clear_tbl)) AS rank FROM clear_tbl WHERE user_id = ? ORDER BY clear_score DESC LIMIT 1;";
         $ps = $pdo->prepare($sql);
         $ps->bindValue(1, $id, PDO::PARAM_INT);
         $ps->execute();
