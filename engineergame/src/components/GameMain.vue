@@ -22,7 +22,22 @@
             <div class="tate">
                 <p class="margin_auto">{{ state.nowday }}日目</p>
             </div>
-            <div class="remote_controller">
+            
+        </div>
+        <div class="busyo">
+            <!-- 4 jinji_lvup(左)という名前の子コンポーネントのemitsを受け取り、jinji_lvup(右)という関数を実行 -->
+            <Jinji :topstate="state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @jinji_lvup="jinji_lvup" @jinji_addsyain="jinji_addsyain"/>
+            <Kaihatu :topstate="state" :kaihatu_state="kaihatu_state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @kaihatu_lvup="kaihatu_lvup" @kaihatu_addsyain="kaihatu_addsyain"/>
+        </div>
+        <div class="busyo">
+            <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
+            <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
+        </div>
+        <div class="remote_controller">
+            <div class="tate">
+                    <p class="remote_moji">状態</p>
+                    <p class="remote_moji">{{state.nowstate}}</p>
+                </div>
                 <div class="tate">
                     <img src="./PNG/stop.png" class="remote_img" @click="timeclear">
                     <div class="rerative">
@@ -34,21 +49,7 @@
                         <p class="remote_naka" @click="remote_five">5</p>
                     </div>
                 </div>
-                <div class="tate">
-                    <p class="remote_moji">状態</p>
-                    <p class="remote_moji">{{state.nowstate}}</p>
-                </div>
             </div>
-        </div>
-        <div class="busyo">
-            <!-- 4 jinji_lvup(左)という名前の子コンポーネントのemitsを受け取り、jinji_lvup(右)という関数を実行 -->
-            <Jinji :topstate="state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @jinji_lvup="jinji_lvup" @jinji_addsyain="jinji_addsyain"/>
-            <Kaihatu :topstate="state" :kaihatu_state="kaihatu_state" :keiri_state="keiri_state" :kenkou_state="kenkou_state" @kaihatu_lvup="kaihatu_lvup" @kaihatu_addsyain="kaihatu_addsyain"/>
-        </div>
-        <div class="busyo">
-            <Keiri :topstate="state" :kenkou_state="kenkou_state" @keiri_lvup="keiri_lvup" @keiri_addsyain="keiri_addsyain"/>
-            <Kenkou :topstate="state" :keiri_state="keiri_state" @kenkou_lvup="kenkou_lvup" @kenkou_addsyain="kenkou_addsyain"/>
-        </div>
         <img v-show="state.nowimg==0" src="./PNG/wide.png" @click="wide" class="fullscreen">
         <img v-show="state.nowimg==1" src="./PNG/small.png" @click="wide" class="fullscreen">
         <teleport to="body">
@@ -437,8 +438,8 @@ const emits = defineEmits([
 }
 p{
     margin:0px;
-    /* font-size:4.5vmin; */
-    font-size: 2.5vw;
+    font-size:4.5vmin;
+    /* font-size: 2vw; */
 }
 .margin_auto{
     margin: auto;
@@ -457,7 +458,15 @@ p{
     height: 100%;
 }
 .remote_controller{
+    position:absolute;
+    right:0.5vw;
+    background-color: white;
+    border-radius: 15px;
+    border: solid;
+    padding:1vw;
+    bottom: 6vw;
     display: flex;
+    flex-flow:column;
     gap:1vw;
 }
 .remote_img{
