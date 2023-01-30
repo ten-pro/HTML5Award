@@ -10,6 +10,7 @@
         <p class="price">-{{ state.price - Math.floor(state.price*props.keiri_state.next) }}万円</p>
         <p class="detail1">１週間ごとに{{ state.next }}人ずつ</p>
         <p class="detail2">社員が増える(小数点以下は確率に変換)</p>
+        {{ props.topstate.money }}
     </div>
 </template>
 <script setup>

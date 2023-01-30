@@ -55,6 +55,8 @@ import { reactive } from "vue"
 let name=reactive("");
 let pass=reactive("");
 let display=reactive(["none"]);
+
+
 let loginchk =()=>{
             axios
                 .post('https://mp-class.chips.jp/engineergame/Loginmain.php', {
